@@ -1,0 +1,85 @@
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #e3f2fd);
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(33, 150, 243, 0.2);
+}
+
+h1, h2 {
+  text-align: center;
+  color: #1565c0;
+}
+
+form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-weight: 600;
+  color: #0d47a1;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bbdefb;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #f0f8ff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  align-self: center  ;
+  background-color: #2196f3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1976d2;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+li {
+  background: #e3f2fd;
+  border-left: 6px solid #42a5f5;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  position: relative;
+}
+
+li::before {
+  content: "🧩";
+  position: absolute;
+  left: -30px;
+  top: 12px;
+  font-size: 20px;
+}

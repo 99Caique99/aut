@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comportamentos</title>
+  <link rel="stylesheet" href="comportamentos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>💙 Registro de Comportamentos</h1>
+
+    <form id="formComportamento">
+      <label for="comportamento">Comportamento:</label>
+      <input type="text" id="comportamento" placeholder="Ex: Agressividade, Estereotipia..." required>
+
+      <label for="data">Data:</label>
+      <input type="date" id="data" required>
+
+      <label for="obsComportamento">Observações:</label>
+      <textarea id="obsComportamento" rows="3" placeholder="Ex: Ocorrência após frustração..."></textarea>
+
+      <button type="submit">➕ Adicionar</button>
+    </form>
+
+    <h2>📋 Lista de Comportamentos</h2>
+    <ul id="listaComportamentos"></ul>
+  </div>
+
+  <script src="comportamentos.js"></script>
+</body>
+</html>

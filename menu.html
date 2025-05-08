@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Principal</title>
+  <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+  <div class="menu-container">
+    <h1 id="saudacao">Bem-vindo!</h1>
+
+    <div class="opcoes">
+      <button onclick="location.href='cadastro.html'">👶 Cadastro</button>
+      <button onclick="location.href='agenda.html'">📅 Agenda</button>
+      <button onclick="location.href='comportamentos.html'">💬 Comportamentos</button>
+    </div>
+  </div>
+
+  <script>
+    const nome = localStorage.getItem('nomeUsuario') || '';
+    const genero = localStorage.getItem('generoUsuario') || '';
+    document.getElementById('saudacao').textContent = `Bem-vindo, ${genero} ${nome}!`;
+  </script>
+</body>
+</html>

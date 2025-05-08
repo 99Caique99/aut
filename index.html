@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bem-vindo</title>
+  <link rel="stylesheet" href="entrada.css">
+</head>
+<body>
+  <div class="entrada-container">
+    <h1>Seja bem-vindo(a)!</h1>
+    <p>Vamos personalizar sua experiência 🧡</p>
+
+    <form id="formEntrada">
+      <input type="text" id="nome" placeholder="Digite seu nome" required>
+      
+      <div class="genero">
+        <label><input type="radio" name="genero" value="mamãe" required> Mamãe</label>
+        <label><input type="radio" name="genero" value="papai" required> Papai</label>
+      </div>
+
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+
+  <script>
+    // Verifica se já existe nome e gênero salvos
+    const nomeSalvo = localStorage.getItem('nomeUsuario');
+    const generoSalvo = localStorage.getItem('generoUsuario');
+  
+    if (nomeSalvo && generoSalvo) {
+      // Se já existe, redireciona direto para o menu
+      window.location.href = 'menu.html';
+    }
+  
+    document.getElementById('formEntrada').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value.trim();
+      const genero = document.querySelector('input[name="genero"]:checked').value;
+  
+      if (nome && genero) {
+        localStorage.setItem('nomeUsuario', nome);
+        localStorage.setItem('generoUsuario', genero);
+        window.location.href = 'menu.html';
+      }
+    });
+  </script>
+  
+  <script src="app.js"></script>
+</body>
+</html>

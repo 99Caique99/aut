@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: url(https://img.freepik.com/premium-vector/colorful-autism-pattern-with-puzzles-pieces-seamless-background-with-yellow-blue-red-puzzles-world-autism-awareness-day-april-2-vector-illustration_502651-927.jpg);
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .menu-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .menu-container h1 {
+    color: #009688;
+    margin-bottom: 30px;
+  }
+  
+  .opcoes button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    background-color: #009688;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .opcoes button:hover {
+    background-color: #00796b;
+  }
+  
