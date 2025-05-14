@@ -9,6 +9,10 @@ body {
   align-items: center;
   height: 100vh; /* Centraliza a página verticalmente */
   color: #333;
+  min-height: 100vh; /* MELHOR usar min-height */
+  height: auto;       /* REMOVER height fixo */
+  padding: 20px;      /* adiciona espaço ao redor */
+  box-sizing: border-box;
 }
 
 .container {

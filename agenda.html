@@ -1,38 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agenda de Eventos</title>
-  <link rel="stylesheet" href="agenda.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agenda Especial</title>
+  <link rel="stylesheet" href="agenda.css" />
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <button id="mesAnterior" class="navegacao">←</button>
-      <div id="mesAno" class="mesAno"></div>
-      <button id="mesProximo" class="navegacao">→</button>
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <button id="prevMonth">❮</button>
+      <h2 id="monthLabel">Mês</h2>
+      <button id="nextMonth">❯</button>
     </div>
-
-    <!-- Formulário Pop-up -->
-    <div id="infoEvento" class="popup hidden">
-      <div class="popup-inner">
-        <h3>Evento para <span id="dataEvento"></span></h3>
-        <form id="formEvento">
-          <input type="text" id="titulo" placeholder="Título do evento" required>
-          <textarea id="descricao" placeholder="Descrição" required></textarea>
-          <div class="botoes">
-            <button type="submit" class="salvar">Salvar</button>
-            <button type="button" id="excluir" class="excluir">Excluir</button>
-            <button type="button" id="cancelar" class="cancelar">Cancelar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Calendário -->
-    <div id="calendario" class="calendario"></div>
+    <div class="calendar" id="calendar"></div>
   </div>
+
+  <div class="event-details" id="eventDetails">
+    <h3>Detalhes do Compromisso</h3>
+    <input type="text" id="eventTitle" placeholder="Título do compromisso" />
+    <textarea id="eventDescription" placeholder="Descrição do compromisso"></textarea>
+    
+    <select id="eventType">
+      <option value="">Selecione o tipo</option>
+      <option value="terapia">Terapia</option>
+      <option value="escola">Escola</option>
+      <option value="lazer">Lazer</option>
+      <option value="outro">Outro</option>
+    </select>
+
+    <div class="buttons">
+      <button id="saveEvent">Salvar</button>
+      <button id="editEvent" style="display: none;">Editar</button>
+      <button id="cancelEvent">Cancelar</button>
+    </div>
+  </div>
+<div class="modal-overlay" id="modalOverlay">
+  <div class="event-details" id="eventDetails">
+    <button class="close-modal" onclick="closeModal()">×</button>
+    <input type="text" id="eventTitle" placeholder="Título do evento">
+    <textarea id="eventDescription" placeholder="Descrição do evento"></textarea>
+    <select id="eventCategory">
+      <option value="">Selecione uma categoria</option>
+      <option value="terapia">Terapia</option>
+      <option value="escola">Escola</option>
+      <option value="lazer">Lazer</option>
+      <option value="outro">Outro</option>
+    </select>
+    <div class="buttons">
+      <button onclick="saveEvent()">Salvar</button>
+      <button onclick="deleteEvent()">Excluir</button>
+    </div>
+  </div>
+</div>
 
   <script src="agenda.js"></script>
 </body>

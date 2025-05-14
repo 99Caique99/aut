@@ -1,133 +1,136 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const calendario = document.getElementById('calendario');
-    const mesAno = document.getElementById('mesAno');
-    const formEvento = document.getElementById('formEvento');
-    const inputTitulo = document.getElementById('titulo');
-    const inputDescricao = document.getElementById('descricao');
-    const infoEvento = document.getElementById('infoEvento');
-    const btnCancelar = document.getElementById('cancelar');
-    const dataEvento = document.getElementById('dataEvento');
+const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let selectedDate = null;
+let events = JSON.parse(localStorage.getItem("agendaEventos")) || [];
 
-    let eventos = JSON.parse(localStorage.getItem('eventos')) || [];
-    let dataSelecionada = null;
-    let eventoExistente = null;
+const calendar = document.getElementById("calendar");
+const monthLabel = document.getElementById("monthLabel");
+const eventDetails = document.getElementById("eventDetails");
+const titleInput = document.getElementById("eventTitle");
+const descInput = document.getElementById("eventDescription");
+const typeSelect = document.getElementById("eventType");
+const saveBtn = document.getElementById("saveEvent");
+const editBtn = document.getElementById("editEvent");
 
-    // Função para exibir o calendário
-    function renderizarCalendario(mes, ano) {
-        mesAno.textContent = `${getMesNome(mes)} ${ano}`;
-        calendario.innerHTML = '';
+function renderCalendar() {
+  monthLabel.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+  calendar.innerHTML = '';
 
-        const primeiroDia = new Date(ano, mes, 1);
-        const ultimoDia = new Date(ano, mes + 1, 0);
-        const diasNoMes = ultimoDia.getDate();
-        const diaDaSemanaInicio = primeiroDia.getDay();
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const weekdays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-        // Preenche os dias vazios do começo
-        for (let i = 0; i < diaDaSemanaInicio; i++) {
-            const diaVazio = document.createElement('div');
-            calendario.appendChild(diaVazio);
-        }
+  weekdays.forEach(day => {
+    const dayHeader = document.createElement("div");
+    dayHeader.textContent = day;
+    dayHeader.classList.add("weekday");
+    calendar.appendChild(dayHeader);
+  });
 
-        // Preenche os dias do mês
-        for (let dia = 1; dia <= diasNoMes; dia++) {
-            const diaElemento = document.createElement('div');
-            diaElemento.classList.add('dia');
-            diaElemento.textContent = dia;
-            diaElemento.dataset.dia = dia;
+  for (let i = 0; i < firstDay; i++) {
+    calendar.appendChild(document.createElement("div"));
+  }
 
-            // Verifica se há evento para o dia
-            if (eventos.some(evento => evento.data === `${ano}-${mes + 1}-${dia}`)) {
-                diaElemento.classList.add('evento');
-            }
+  for (let i = 1; i <= lastDate; i++) {
+    const date = new Date(currentYear, currentMonth, i);
+    const dayCell = document.createElement("div");
+    dayCell.textContent = i;
 
-            diaElemento.addEventListener('click', function() {
-                dataSelecionada = new Date(ano, mes, dia);
-                eventoExistente = eventos.find(evento => evento.data === `${ano}-${mes + 1}-${dia}`);
-                mostrarFormulario(dataSelecionada);
-            });
-
-            calendario.appendChild(diaElemento);
-        }
+    const event = events.find(e => new Date(e.date).toDateString() === date.toDateString());
+    if (event) {
+      dayCell.classList.add(event.type || 'outro');
     }
 
-    // Função para mostrar o formulário de adicionar/editar evento
-    function mostrarFormulario(data) {
-        inputTitulo.value = eventoExistente ? eventoExistente.titulo : '';
-        inputDescricao.value = eventoExistente ? eventoExistente.descricao : '';
+    dayCell.addEventListener("click", () => selectDate(i));
+    calendar.appendChild(dayCell);
+  }
+}
 
-        // Exibe a data selecionada
-        dataEvento.textContent = `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`;
+function selectDate(day) {
+  selectedDate = new Date(currentYear, currentMonth, day);
+  titleInput.value = "";
+  descInput.value = "";
+  typeSelect.value = "";
 
-        // Exibe o formulário de evento acima do calendário
-        infoEvento.style.display = 'block';
-        
-        // Ao submeter, salvar ou atualizar o evento
-        formEvento.onsubmit = function(e) {
-            e.preventDefault();
+  const existingEvent = events.find(e => new Date(e.date).toDateString() === selectedDate.toDateString());
 
-            const titulo = inputTitulo.value;
-            const descricao = inputDescricao.value;
+  if (existingEvent) {
+    titleInput.value = existingEvent.title;
+    descInput.value = existingEvent.description;
+    typeSelect.value = existingEvent.type;
+    saveBtn.style.display = "none";
+    editBtn.style.display = "inline-block";
+  } else {
+    saveBtn.style.display = "inline-block";
+    editBtn.style.display = "none";
+  }
 
-            const evento = {
-                titulo,
-                descricao,
-                data: formatarData(data)
-            };
-
-            // Verifica se já existe evento para a data
-            if (eventoExistente) {
-                // Atualiza o evento existente
-                const index = eventos.findIndex(evento => evento.data === eventoExistente.data);
-                eventos[index] = evento;
-            } else {
-                // Adiciona um novo evento
-                eventos.push(evento);
-            }
-
-            // Salva no localStorage
-            localStorage.setItem('eventos', JSON.stringify(eventos));
-
-            // Atualiza o calendário
-            renderizarCalendario(data.getMonth(), data.getFullYear());
-            eventoExistente = null;  // Limpa a variável de evento existente após salvar
-            infoEvento.style.display = 'none';  // Esconde o formulário de evento
-        };
+  document.querySelectorAll(".calendar div").forEach(cell => {
+    if (parseInt(cell.textContent) === day) {
+      cell.classList.add("selected");
+    } else {
+      cell.classList.remove("selected");
     }
+  });
 
-    // Função para formatar a data
-    function formatarData(data) {
-        return `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`;
-    }
+  eventDetails.style.display = "flex";
+}
 
-    // Função para obter o nome do mês
-    function getMesNome(mes) {
-        const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-        return meses[mes];
-    }
+saveBtn.addEventListener("click", () => {
+  const event = {
+    title: titleInput.value,
+    description: descInput.value,
+    type: typeSelect.value,
+    date: selectedDate
+  };
 
-    // Inicializa o calendário
-    const dataAtual = new Date();
-    renderizarCalendario(dataAtual.getMonth(), dataAtual.getFullYear());
-
-    // Navegação entre os meses
-    document.getElementById('mesAnterior').addEventListener('click', function() {
-        const mes = dataAtual.getMonth() - 1;
-        renderizarCalendario(mes, dataAtual.getFullYear());
-    });
-
-    document.getElementById('mesProximo').addEventListener('click', function() {
-        const mes = dataAtual.getMonth() + 1;
-        renderizarCalendario(mes, dataAtual.getFullYear());
-    });
-
-    // Botão cancelar
-    btnCancelar.addEventListener('click', function() {
-        // Limpa os campos de título e descrição
-        inputTitulo.value = '';
-        inputDescricao.value = '';
-
-        // Fecha o formulário de evento
-        infoEvento.style.display = 'none';
-        eventoExistente = null;  // Reseta o evento existente
-    });
+  events.push(event);
+  localStorage.setItem("agendaEventos", JSON.stringify(events));
+  alert("Compromisso salvo!");
+  eventDetails.style.display = "none";
+  renderCalendar();
 });
+
+editBtn.addEventListener("click", () => {
+  events = events.map(e => {
+    if (new Date(e.date).toDateString() === selectedDate.toDateString()) {
+      return {
+        title: titleInput.value,
+        description: descInput.value,
+        type: typeSelect.value,
+        date: selectedDate
+      };
+    }
+    return e;
+  });
+
+  localStorage.setItem("agendaEventos", JSON.stringify(events));
+  alert("Compromisso editado!");
+  eventDetails.style.display = "none";
+  renderCalendar();
+});
+
+document.getElementById("cancelEvent").addEventListener("click", () => {
+  eventDetails.style.display = "none";
+});
+
+document.getElementById("prevMonth").addEventListener("click", () => {
+  currentMonth--;
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+  renderCalendar();
+});
+
+document.getElementById("nextMonth").addEventListener("click", () => {
+  currentMonth++;
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
+  renderCalendar();
+});
+
+renderCalendar();

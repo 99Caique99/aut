@@ -1,49 +1,99 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: url(https://img.freepik.com/fotos-premium/fundo-de-pecas-de-quebra-cabeca-azul-ilustracao-3d-copie-o-espaco_522591-3760.jpg?w=2000);
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.menu-container {
+  background-color: white;
+  padding: 40px; /* Aumentado para mais altura */
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 380px;
+}
+
+/* Estilo para os botões no menu */
+.opcoes button {
+  display: block;
+  width: 100%;
+  margin: 15px 0;  /* Mantendo o espaço entre os botões */
+  padding: 20px;   /* Reduzindo o padding para tornar o botão menos alto */
+  font-size: 26px; /* Tamanho de fonte mais adequado para um botão de altura moderada */
+  border: none;
+  border-radius: 12px;
+  background-color: #009688;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Mudança na cor do botão ao passar o mouse */
+.opcoes button:hover {
+  background-color: #00796b;
+}
+
+
+.opcoes button:hover {
+  background-color: #00796b;
+}
   
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: url(https://img.freepik.com/premium-vector/colorful-autism-pattern-with-puzzles-pieces-seamless-background-with-yellow-blue-red-puzzles-world-autism-awareness-day-april-2-vector-illustration_502651-927.jpg);
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .menu-container {
-    background-color: white;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  .menu-container h1 {
-    color: #009688;
-    margin-bottom: 30px;
-  }
-  
-  .opcoes button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 15px;
-    font-size: 18px;
-    border: none;
-    border-radius: 12px;
-    background-color: #009688;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .opcoes button:hover {
-    background-color: #00796b;
-  }
-  
+
+#next-appointments {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+  z-index: 10;
+}
+
+#next-appointments h2 {
+  font-size: 1.6rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+#appointments-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#appointments-list li {
+  background-color: #f0f8ff;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-left: 5px solid #3498db;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-size: 1rem;
+  color: #555;
+}
+
+#appointments-list li strong {
+  font-size: 1.1rem;
+  color: #222;
+}
+
+#appointments-list li p {
+  font-size: 0.95rem;
+  margin: 5px 0 0;
+  color: #a48f8f;
+}
