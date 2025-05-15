@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modo Calma</title>
+  <link rel="stylesheet" href="calma.css">
+</head>
+<body>
+  <div class="puzzle-bg">
+    <div class="puzzle-piece blue"></div>
+    <div class="puzzle-piece yellow"></div>
+    <div class="puzzle-piece red"></div>
+    <div class="puzzle-piece green"></div>
+    <div class="puzzle-piece purple"></div>
+    <div class="puzzle-piece orange"></div>
+    <div class="puzzle-piece pink"></div>
+    <div class="puzzle-piece cyan"></div>
+  </div>
+  <div class="calma-container">
+    <button class="close-calma" onclick="window.history.back()" title="Voltar">&larr;</button>
+    <h1>Modo Calma</h1>
+    <div class="calma-circle" id="calma-circle"></div>
+    <p id="calma-text">Inspire...</p>
+    
+    <!-- ...existing code... -->
+    <div class="calma-sounds">
+      <button class="play-sound" onclick="playCalmaSound('nature')">🌳 Natureza</button>
+      <button class="play-sound" onclick="playCalmaSound('mar')">🌊 Mar</button>
+      <button class="play-sound" onclick="playCalmaSound('chuva')">🌧️ Chuva</button>
+      <button class="play-sound" onclick="playCalmaSound('musica')">🎵 Música Suave</button>
+    </div>
+    <audio id="audio-nature" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae0e7.mp3"></audio>
+    <audio id="audio-mar" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b273b.mp3"></audio>
+    <audio id="audio-chuva" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae0e7.mp3"></audio>
+    <audio id="audio-musica" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12c6b7b2b2.mp3"></audio>
+<!-- ...existing code... -->
+  </div>
+  <script>
+  // Respiração guiada
+  const calmaText = document.getElementById('calma-text');
+  const frases = ['Inspire...', 'Segure...', 'Expire...', 'Relaxe...'];
+  let fase = 0;
+  setInterval(() => {
+    fase = (fase + 1) % frases.length;
+    calmaText.textContent = frases[fase];
+  }, 4000);
+
+  // Sons relaxantes
+  let currentAudio = null;
+  function playCalmaSound(tipo) {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
+    let audioId = '';
+    if (tipo === 'nature') audioId = 'audio-nature';
+    if (tipo === 'mar') audioId = 'audio-mar';
+    if (tipo === 'chuva') audioId = 'audio-chuva';
+    if (tipo === 'musica') audioId = 'audio-musica';
+    currentAudio = document.getElementById(audioId);
+    if (currentAudio) {
+      currentAudio.currentTime = 0;
+      currentAudio.play();
+    }
+  }
+</script>
+</body>
+</html>

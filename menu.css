@@ -1,99 +1,472 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ...existing code... */
 
+/* Efeito de fundo com gradiente e peças de quebra-cabeça */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: url(https://img.freepik.com/fotos-premium/fundo-de-pecas-de-quebra-cabeca-azul-ilustracao-3d-copie-o-espaco_522591-3760.jpg?w=2000);
-  background-size: cover;
-  height: 100vh;
+  background: linear-gradient(135deg, #a7e9f7 0%, #f7d6e0 100%);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
-}
-.menu-container {
-  background-color: white;
-  padding: 40px; /* Aumentado para mais altura */
-  border-radius: 16px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-  text-align: center;
-  width: 100%;
-  max-width: 380px;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Estilo para os botões no menu */
+/* Quebra-cabeça decorativo */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('https://cdn.pixabay.com/photo/2013/07/13/12/46/puzzle-146849_1280.png') repeat;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Container do menu */
+.menu-container {
+  background: rgba(255,255,255,0.95);
+  padding: 48px 32px 32px 32px;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 0 #a7e9f7 inset;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 40px auto 0 auto;
+  position: relative;
+  z-index: 2;
+  animation: floatIn 1s cubic-bezier(.23,1.02,.67,1.01);
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.98);}
+  to   { opacity: 1; transform: translateY(0) scale(1);}
+}
+
+/* Botões do menu com efeito de brilho e sombra */
 .opcoes button {
   display: block;
   width: 100%;
-  margin: 15px 0;  /* Mantendo o espaço entre os botões */
-  padding: 20px;   /* Reduzindo o padding para tornar o botão menos alto */
-  font-size: 26px; /* Tamanho de fonte mais adequado para um botão de altura moderada */
+  margin: 18px 0;
+  padding: 22px;
+  font-size: 1.4rem;
   border: none;
-  border-radius: 12px;
-  background-color: #009688;
-  color: white;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #5de0f7 0%, #b7b6f7 100%);
+  color: #222;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 16px rgba(93,224,247,0.13), 0 1.5px 0 #f7d6e0 inset;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Mudança na cor do botão ao passar o mouse */
+.opcoes button::after {
+  content: "";
+  position: absolute;
+  left: -75%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+  transform: skewX(-20deg);
+  transition: left 0.5s;
+}
+
 .opcoes button:hover {
-  background-color: #00796b;
+  background: linear-gradient(90deg, #f7d6e0 0%, #5de0f7 100%);
+  color: #222;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(93,224,247,0.18), 0 1.5px 0 #b7b6f7 inset;
 }
 
-
-.opcoes button:hover {
-  background-color: #00796b;
+.opcoes button:hover::after {
+  left: 120%;
 }
-  
 
-#next-appointments {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 90%;
+/* Próximos compromissos com efeito glassmorphism e animação */
+.proximos-compromissos {
+  margin-top: 32px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 18px;
+  padding: 22px 18px 18px 18px;
+  box-shadow: 0 8px 32px rgba(93,224,247,0.13), 0 1.5px 0 #b7b6f7 inset;
+  backdrop-filter: blur(4px);
+  max-width: 400px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 40px;
-  z-index: 10;
+  position: relative;
+  z-index: 2;
+  animation: fadeInUp 1.2s cubic-bezier(.23,1.02,.67,1.01);
 }
 
-#next-appointments h2 {
-  font-size: 1.6rem;
-  text-align: center;
-  color: #333;
-  margin-bottom: 15px;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px);}
+  to   { opacity: 1; transform: translateY(0);}
 }
 
-#appointments-list {
-  list-style-type: none;
+.proximos-compromissos h2 {
+  font-size: 1.3rem;
+  margin-bottom: 14px;
+  color: #009688;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.proximos-compromissos ul {
+  list-style: none;
   padding: 0;
   margin: 0;
 }
 
-#appointments-list li {
-  background-color: #f0f8ff;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-left: 5px solid #3498db;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  font-size: 1rem;
+.proximos-compromissos li {
+  margin-bottom: 14px;
+  font-size: 1.08rem;
+  background: linear-gradient(90deg, #e0f7fa 0%, #f7d6e0 100%);
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 8px rgba(93,224,247,0.08);
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  border-left: 6px solid #5de0f7;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: popIn 0.7s cubic-bezier(.23,1.02,.67,1.01);
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.95);}
+  to   { opacity: 1; transform: scale(1);}
+}
+
+.proximos-compromissos li strong {
+  color: #00796b;
+  font-size: 1.13rem;
+  letter-spacing: 0.5px;
+}
+
+.proximos-compromissos li span {
   color: #555;
+  font-size: 0.98rem;
 }
 
-#appointments-list li strong {
-  font-size: 1.1rem;
-  color: #222;
+.proximos-compromissos li::before {
+  content: "🧩";
+  position: absolute;
+  left: -8px;
+  top: 10px;
+  font-size: 1.3rem;
+  opacity: 0.25;
+  pointer-events: none;
+  transition: opacity 0.3s;
 }
 
-#appointments-list li p {
-  font-size: 0.95rem;
-  margin: 5px 0 0;
-  color: #a48f8f;
+.proximos-compromissos li:hover {
+  transform: scale(1.03) translateX(4px);
+  box-shadow: 0 6px 24px rgba(93,224,247,0.18);
+  background: linear-gradient(90deg, #f7d6e0 0%, #e0f7fa 100%);
 }
+
+.proximos-compromissos li:hover::before {
+  opacity: 0.5;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .menu-container,
+  .proximos-compromissos {
+    max-width: 98vw;
+    padding: 18px 6vw;
+  }
+  .opcoes button {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+}
+/* ...existing code... */
+
+/* Fundo com gradiente e peças de quebra-cabeça coloridas */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #a7e9f7 0%, #f7d6e0 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Peças de quebra-cabeça coloridas no fundo */
+.puzzle-bg {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  top: 0; left: 0;
+  overflow: hidden;
+}
+.puzzle-piece {
+  position: absolute;
+  opacity: 0.18;
+  width: 60px;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: floatPuzzle 8s infinite alternate;
+}
+.puzzle-piece.blue    { background-image: url('https://img.icons8.com/color/96/000000/jigsaw-puzzle.png'); top: 10%; left: 5%;  filter: hue-rotate(180deg);}
+.puzzle-piece.yellow  { background-image: url('https://img.icons8.com/color/96/000000/jigsaw-puzzle.png'); top: 60%; left: 80%; filter: hue-rotate(60deg);}
+.puzzle-piece.red     { background-image: url('https://img.icons8.com/color/96/000000/jigsaw-puzzle.png'); top: 80%; left: 10%; filter: hue-rotate(-30deg);}
+.puzzle-piece.green   { background-image: url('https://img.icons8.com/color/96/000000/jigsaw-puzzle.png'); top: 30%; left: 70%; filter: hue-rotate(90deg);}
+@keyframes floatPuzzle {
+  0% { transform: translateY(0) scale(1);}
+  100% { transform: translateY(20px) scale(1.08);}
+}
+
+/* Cards dos compromissos com peça de quebra-cabeça colorida */
+.proximos-compromissos li {
+  margin-bottom: 14px;
+  font-size: 1.08rem;
+  background: linear-gradient(90deg, #e0f7fa 0%, #f7d6e0 100%);
+  border-radius: 10px;
+  padding: 14px 16px 14px 48px;
+  box-shadow: 0 2px 8px rgba(93,224,247,0.08);
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  border-left: 6px solid #5de0f7;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: popIn 0.7s cubic-bezier(.23,1.02,.67,1.01);
+}
+
+/* Peça de quebra-cabeça decorativa no card */
+.proximos-compromissos li::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 16px;
+  width: 28px;
+  height: 28px;
+  background-image: url('https://img.icons8.com/color/48/000000/jigsaw-puzzle.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.35;
+  filter: drop-shadow(0 2px 2px #fff);
+  transition: opacity 0.3s;
+}
+.proximos-compromissos li:nth-child(1)::before { filter: hue-rotate(180deg) drop-shadow(0 2px 2px #fff);}
+.proximos-compromissos li:nth-child(2)::before { filter: hue-rotate(60deg) drop-shadow(0 2px 2px #fff);}
+.proximos-compromissos li:nth-child(3)::before { filter: hue-rotate(-30deg) drop-shadow(0 2px 2px #fff);}
+
+.proximos-compromissos li:hover {
+  transform: scale(1.03) translateX(4px);
+  box-shadow: 0 6px 24px rgba(93,224,247,0.18);
+  background: linear-gradient(90deg, #f7d6e0 0%, #e0f7fa 100%);
+}
+.proximos-compromissos li:hover::before {
+  opacity: 0.7;
+}
+
+/* ...restante do seu CSS... */
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .menu-container,
+  .proximos-compromissos {
+    max-width: 98vw;
+    padding: 18px 6vw;
+  }
+  .opcoes button {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+  .puzzle-piece { width: 36px; height: 36px;}
+}
+/* ...existing code... */
+
+/* Ajuste para evitar rolagem lateral e garantir responsividade */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+
+/* ...existing code... */
+
+/* Peças de quebra-cabeça coloridas no fundo usando SVG inline */
+.puzzle-bg {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  top: 0; left: 0;
+  overflow: hidden;
+}
+.puzzle-piece {
+  position: absolute;
+  opacity: 0.18;
+  width: 60px;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: floatPuzzle 8s infinite alternate;
+}
+.puzzle-piece.blue {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="deepskyblue" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 10%; left: 5%;
+}
+.puzzle-piece.yellow {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="gold" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 60%; left: 80%;
+}
+.puzzle-piece.red {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="crimson" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 80%; left: 10%;
+}
+.puzzle-piece.green {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="mediumseagreen" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 30%; left: 70%;
+}
+@keyframes floatPuzzle {
+  0% { transform: translateY(0) scale(1);}
+  100% { transform: translateY(20px) scale(1.08);}
+}
+
+/* Cards dos compromissos com peça de quebra-cabeça decorativa SVG */
+.proximos-compromissos li {
+  margin-bottom: 14px;
+  font-size: 1.08rem;
+  background: linear-gradient(90deg, #e0f7fa 0%, #f7d6e0 100%);
+  border-radius: 10px;
+  padding: 14px 16px 14px 48px;
+  box-shadow: 0 2px 8px rgba(93,224,247,0.08);
+  color: #333;
+  position: relative;
+  overflow: hidden;
+  border-left: 6px solid #5de0f7;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: popIn 0.7s cubic-bezier(.23,1.02,.67,1.01);
+}
+
+/* Peça SVG decorativa no card */
+.proximos-compromissos li::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 16px;
+  width: 28px;
+  height: 28px;
+  background-image: url('data:image/svg+xml;utf8,<svg width="28" height="28" viewBox="0 0 96 96" fill="deepskyblue" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.35;
+  filter: drop-shadow(0 2px 2px #fff);
+  transition: opacity 0.3s;
+}
+.proximos-compromissos li:nth-child(1)::before { filter: drop-shadow(0 2px 2px #fff);}
+.proximos-compromissos li:nth-child(2)::before { filter: hue-rotate(60deg) drop-shadow(0 2px 2px #fff);}
+.proximos-compromissos li:nth-child(3)::before { filter: hue-rotate(-30deg) drop-shadow(0 2px 2px #fff);}
+
+.proximos-compromissos li:hover {
+  transform: scale(1.03) translateX(4px);
+  box-shadow: 0 6px 24px rgba(93,224,247,0.18);
+  background: linear-gradient(90deg, #f7d6e0 0%, #e0f7fa 100%);
+}
+.proximos-compromissos li:hover::before {
+  opacity: 0.7;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .menu-container,
+  .proximos-compromissos {
+    max-width: 70vw;
+    padding: 18px 6vw;
+  }
+  .opcoes button {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+  .puzzle-piece { width: 36px; height: 36px;}
+}
+/* ...existing code... */
+
+/* ...existing code... */
+
+.puzzle-piece.blue {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23007aff" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 10%; left: 5%;
+}
+.puzzle-piece.yellow {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ffd600" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 60%; left: 80%;
+}
+.puzzle-piece.red {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ff1744" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 80%; left: 10%;
+}
+.puzzle-piece.green {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%2300c853" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 30%; left: 70%;
+}
+/* Novas peças */
+.puzzle-piece.purple {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%238e24aa" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 20%; left: 50%;
+}
+.puzzle-piece.orange {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ff9100" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 45%; left: 20%;
+}
+.puzzle-piece.pink {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23e040fb" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 75%; left: 60%;
+}
+.puzzle-piece.cyan {
+  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%2300bcd4" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  top: 55%; left: 40%;
+}
+
+/* ...existing code... */
+
+/* Cards dos compromissos com peça de quebra-cabeça decorativa SVG mais forte */
+.proximos-compromissos li::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 16px;
+  width: 28px;
+  height: 28px;
+  background-image: url('data:image/svg+xml;utf8,<svg width="28" height="28" viewBox="0 0 96 96" fill="%23007aff" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  filter: drop-shadow(0 2px 2px #fff);
+  transition: opacity 0.3s;
+}
+.proximos-compromissos li:nth-child(1)::before { filter: drop-shadow(0 2px 2px #fff);}
+.proximos-compromissos li:nth-child(2)::before { filter: hue-rotate(60deg) drop-shadow(0 2px 2px #fff);}
+.proximos-compromissos li:nth-child(3)::before { filter: hue-rotate(-30deg) drop-shadow(0 2px 2px #fff);}
+
+/* ...existing code... */
+/* ...existing code... */
+/* ...existing code... */
+/* ...existing code... */

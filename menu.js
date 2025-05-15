@@ -83,4 +83,44 @@ document.getElementById('view-all-appointments').addEventListener('click', funct
     listElement.appendChild(li);
   });
 });
-// Adiciona um evento de clique ao botão "Adicionar Compromisso"      
+// Adiciona um evento de clique ao botão "Adicionar Compromisso"      function mostrarProximosCompromissos() {
+  // Busca compromissos do localStorage (chave correta: 'appointments')
+  let compromissos = JSON.parse(localStorage.getItem('appointments') || '[]');
+  const agora = new Date();
+
+  // Monta datas completas para comparação
+  compromissos = compromissos
+    .map(c => {
+      const dataHora = `${c.date} ${c.time || '00:00'}`;
+      return {
+        ...c,
+        fullDate: new Date(dataHora)
+      };
+    })
+    .filter(c => c.fullDate >= agora)
+    .sort((a, b) => a.fullDate - b.fullDate)
+    .slice(0, 3);
+
+  const lista = document.getElementById('lista-compromissos');
+  lista.innerHTML = '';
+
+  if (compromissos.length === 0) {
+    lista.innerHTML = '<li>Nenhum compromisso futuro.</li>';
+    return;
+  }
+
+  compromissos.forEach(c => {
+    const li = document.createElement('li');
+    li.classList.add(c.category ? c.category.toLowerCase() : '');
+    li.innerHTML = `
+      <strong>${c.title}</strong>
+      <br>
+      <span>${c.fullDate.toLocaleDateString('pt-BR')} ${c.fullDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span>
+      ${c.location ? `<br><span>Local: ${c.location}</span>` : ''}
+      ${c.category ? `<br><span>Categoria: ${c.category}</span>` : ''}
+    `;
+    lista.appendChild(li);
+  });
+
+
+document.addEventListener('DOMContentLoaded', mostrarProximosCompromissos);

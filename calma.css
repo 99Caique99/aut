@@ -1,0 +1,125 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #a7e9f7 0%, #f7d6e0 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.puzzle-bg {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  top: 0; left: 0;
+  overflow: hidden;
+}
+.puzzle-piece {
+  position: absolute;
+  opacity: 0.18;
+  width: 60px;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: floatPuzzle 8s infinite alternate;
+}
+.puzzle-piece.blue    { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23007aff" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 10%; left: 5%;}
+.puzzle-piece.yellow  { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ffd600" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 60%; left: 80%;}
+.puzzle-piece.red     { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ff1744" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 80%; left: 10%;}
+.puzzle-piece.green   { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%2300c853" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 30%; left: 70%;}
+.puzzle-piece.purple  { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%238e24aa" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 20%; left: 50%;}
+.puzzle-piece.orange  { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ff9100" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 45%; left: 20%;}
+.puzzle-piece.pink    { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23e040fb" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 75%; left: 60%;}
+.puzzle-piece.cyan    { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%2300bcd4" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 55%; left: 40%;}
+@keyframes floatPuzzle {
+  0% { transform: translateY(0) scale(1);}
+  100% { transform: translateY(20px) scale(1.08);}
+}
+
+.calma-container {
+  position: relative;
+  z-index: 2;
+  background: rgba(255,255,255,0.97);
+  border-radius: 22px;
+  padding: 38px 24px 32px 24px;
+  box-shadow: 0 8px 32px 0 rgba(0,122,255,0.13);
+  text-align: center;
+  min-width: 260px;
+  max-width: 90vw;
+  margin: 40px auto;
+  animation: fadeInUp 1.2s cubic-bezier(.23,1.02,.67,1.01);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+
+.calma-container h1 {
+  color: #e040fb;
+  margin-bottom: 18px;
+  font-size: 2.1rem;
+  letter-spacing: 1px;
+}
+
+.calma-circle {
+  margin: 28px auto 18px auto;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a7e9f7 0%, #e040fb 100%);
+  opacity: 0.7;
+  animation: calma-breath 4s infinite;
+  box-shadow: 0 0 32px #e040fb55, 0 0 0 8px #a7e9f733;
+}
+@keyframes calma-breath {
+  0%   { transform: scale(1);}
+  40%  { transform: scale(1.25);}
+  60%  { transform: scale(1.25);}
+  100% { transform: scale(1);}
+}
+
+.calma-container p {
+  font-size: 1.3rem;
+  color: #007aff;
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.play-sound {
+  background: linear-gradient(90deg, #a7e9f7 0%, #e040fb 100%);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  padding: 10px 28px;
+  box-shadow: 0 4px 16px rgba(0,122,255,0.13);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.play-sound:hover {
+  background: linear-gradient(90deg, #e040fb 0%, #a7e9f7 100%);
+  transform: scale(1.05);
+}
+
+.close-calma {
+  position: absolute;
+  top: 10px; left: 18px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close-calma:hover { color: #ff1744; }
+
+@media (max-width: 600px) {
+  .calma-container { padding: 18px 4vw 18px 4vw; }
+  .calma-circle { width: 70px; height: 70px; }
+  .puzzle-piece { width: 36px; height: 36px;}
+}
