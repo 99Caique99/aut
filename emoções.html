@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Emoções</title>
+  <link rel="stylesheet" href="emoções.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="puzzle-bg">
+    <div class="puzzle-piece blue"></div>
+    <div class="puzzle-piece yellow"></div>
+    <div class="puzzle-piece red"></div>
+    <div class="puzzle-piece green"></div>
+    <div class="puzzle-piece purple"></div>
+    <div class="puzzle-piece orange"></div>
+    <div class="puzzle-piece pink"></div>
+    <div class="puzzle-piece cyan"></div>
+  </div>
+  <div class="emocoes-container">
+    <button class="voltar-btn" onclick="window.history.back()" title="Voltar">&larr; Voltar</button>
+   
+   <!-- Adicione acima do <canvas id="graficoEmocoes"> -->
+<div class="seletor-mes">
+  <label for="mesSelecionado">Mês:</label>
+  <select id="mesSelecionado"></select>
+  <label for="anoSelecionado">Ano:</label>
+  <select id="anoSelecionado"></select>
+</div> <h1>Registro de Emoções</h1>
+    <form id="formEmocao" class="form-emocao">
+      <label>
+        Emoção:
+        <select id="emocao" required>
+          <option value="">Selecione</option>
+          <option value="Feliz">😊 Feliz</option>
+          <option value="Triste">😢 Triste</option>
+          <option value="Raiva">😠 Raiva</option>
+          <option value="Ansioso">😰 Ansioso</option>
+          <option value="Calmo">😌 Calmo</option>
+        </select>
+      </label>
+      <label>
+        Data:
+        <input type="date" id="dataEmocao" required>
+      </label>
+      <button type="submit" class="registrar-btn">Registrar Emoção</button>
+    </form>
+    <div class="grafico-area">
+      <h2>Gráfico Mensal de Emoções</h2>
+      <canvas id="graficoEmocoes" width="400" height="220"></canvas>
+    </div>
+    <div class="lista-area">
+      <h2>Emoções Registradas</h2>
+      <ul id="listaEmocoes"></ul>
+    </div>
+  </div>
+  <script src="emoções.js"></script>
+</body>
+</html>

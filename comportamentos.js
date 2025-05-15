@@ -58,3 +58,4 @@ function formatarData(dataISO) {
 }
 
 renderizarLista();
+

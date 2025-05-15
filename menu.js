@@ -1,11 +1,18 @@
 // Carregar nome e gênero do usuário e atualizar a saudação
 const nome = localStorage.getItem('nomeUsuario') || '';
 const genero = localStorage.getItem('generoUsuario') || '';
-document.getElementById('saudacao').textContent = `Bem-vindo, ${genero} ${nome}!`;
 
-// Função para pegar os compromissos armazenados no localStorage
-function getAppointments() {
-  return JSON.parse(localStorage.getItem('appointments')) || [];
+const saudacaoEl = document.getElementById('saudacao');
+if (nome && genero) {
+  // Personaliza a saudação conforme o gênero
+  let prefixo = '';
+  if (genero.toLowerCase() === 'mamãe') prefixo = 'Bem-vinda,';
+  else if (genero.toLowerCase() === 'papai') prefixo = 'Bem-vindo,';
+  else prefixo = 'Bem-vindo(a),';
+
+  saudacaoEl.textContent = `${prefixo} ${genero.charAt(0).toUpperCase() + genero.slice(1)} ${nome}!`;
+} else {
+  saudacaoEl.textContent = "Bem-vindo(a)!";
 }
 
 // Função para exibir apenas o próximo compromisso

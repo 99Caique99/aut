@@ -23,20 +23,18 @@
     <div class="calma-circle" id="calma-circle"></div>
     <p id="calma-text">Inspire...</p>
     
-    <!-- ...existing code... -->
-    <div class="calma-sounds">
-      <button class="play-sound" onclick="playCalmaSound('nature')">🌳 Natureza</button>
-      <button class="play-sound" onclick="playCalmaSound('mar')">🌊 Mar</button>
-      <button class="play-sound" onclick="playCalmaSound('chuva')">🌧️ Chuva</button>
-      <button class="play-sound" onclick="playCalmaSound('musica')">🎵 Música Suave</button>
-    </div>
-    <audio id="audio-nature" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae0e7.mp3"></audio>
-    <audio id="audio-mar" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b273b.mp3"></audio>
-    <audio id="audio-chuva" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae0e7.mp3"></audio>
-    <audio id="audio-musica" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12c6b7b2b2.mp3"></audio>
-<!-- ...existing code... -->
-  </div>
-  <script>
+<div class="calma-sounds">
+  <button class="play-sound" onclick="playCalmaSound('nature')">🌳 Natureza</button>
+  <button class="play-sound" onclick="playCalmaSound('mar')">🌊 Mar</button>
+  <button class="play-sound" onclick="playCalmaSound('chuva')">🌧️ Chuva</button>
+  <button class="play-sound" onclick="playCalmaSound('musica')">🎵 Música Suave</button>
+  <button class="play-sound stop" onclick="stopCalmaSound()">⏹️ Parar Som</button>
+</div>
+<audio id="audio-nature" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae0e7.mp3" controls style="display:none"></audio>
+<audio id="audio-mar" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b273b.mp3" controls style="display:none"></audio>
+<audio id="audio-chuva" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae0e7.mp3" controls style="display:none"></audio>
+<audio id="audio-musica" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12c6b7b2b2.mp3" controls style="display:none"></audio>
+ <script>
   // Respiração guiada
   const calmaText = document.getElementById('calma-text');
   const frases = ['Inspire...', 'Segure...', 'Expire...', 'Relaxe...'];
@@ -49,10 +47,7 @@
   // Sons relaxantes
   let currentAudio = null;
   function playCalmaSound(tipo) {
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-    }
+    stopCalmaSound();
     let audioId = '';
     if (tipo === 'nature') audioId = 'audio-nature';
     if (tipo === 'mar') audioId = 'audio-mar';
@@ -63,6 +58,16 @@
       currentAudio.currentTime = 0;
       currentAudio.play();
     }
+  }
+  function stopCalmaSound() {
+    const audios = [
+      document.getElementById('audio-nature'),
+      document.getElementById('audio-mar'),
+      document.getElementById('audio-chuva'),
+      document.getElementById('audio-musica')
+    ];
+    audios.forEach(a => { if (a) { a.pause(); a.currentTime = 0; } });
+    currentAudio = null;
   }
 </script>
 </body>
