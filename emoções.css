@@ -1,12 +1,12 @@
-   body {
+body {
             font-family: 'Inter', sans-serif;
-            background-color:  #cbf9ff; /* Fundo azul noite */
-            color: #ffffff; /* Cor de texto padrão clara */
+            color: #334155; /* Cor de texto padrão (slate-700) */
+            background-color: #f0f9ff; /* Fundo azul bem claro (sky-50) */
             overflow: hidden;
         }
 
-        /* Container para as partículas */
-        #particle-container {
+        /* Fundo com partículas animadas em tons claros */
+        .particle-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -18,34 +18,32 @@
 
         .particle {
             position: absolute;
+            bottom: -150px;
             border-radius: 50%;
-            background: rgba(59, 57, 57, 0.7);
-            animation: float-up 20s infinite linear;
-        }
-
-        @keyframes float-up {
-            0% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
+            opacity: 0;
+            animation: rise 25s infinite linear;
+            background: rgba(191, 219, 254, 0.7); /* Azul claro para as partículas */
         }
         
-        /* Efeito de card "flutuante" com tema escuro */
-        .glassmorphism-card {
-            background: rgba(15, 23, 42, 0.5); /* bg-slate-900/50 */
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 20s; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 30px; height: 30px; left: 20%; animation-duration: 15s; animation-delay: 3s; background: rgba(224, 231, 255, 0.8); } /* Tom lavanda */
+        .particle:nth-child(3) { width: 100px; height: 100px; left: 35%; animation-duration: 30s; animation-delay: 1s; }
+        .particle:nth-child(4) { width: 50px; height: 50px; left: 50%; animation-duration: 18s; animation-delay: 5s; background: rgba(199, 210, 254, 0.8); } /* Tom azul-índigo claro */
+        .particle:nth-child(5) { width: 120px; height: 120px; left: 65%; animation-duration: 28s; animation-delay: 2s; background: rgba(224, 231, 255, 0.7); } /* Tom lavanda */
+        .particle:nth-child(6) { width: 40px; height: 40px; left: 85%; animation-duration: 22s; animation-delay: 4s; }
+
+        @keyframes rise {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-120vh); opacity: 0; }
         }
 
-        /* Estilo customizado para o seletor de data */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            cursor: pointer;
-            filter: invert(1);
+        /* Efeito de card "flutuante" */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         /* Estilos para botões de emoção */
@@ -54,13 +52,14 @@
         }
         .emotion-btn:hover {
             transform: translateY(-4px);
-            background-color: rgba(30, 41, 59, 0.7);
+            background-color: rgba(255, 255, 255, 0.9);
         }
         .emotion-btn.selected {
             transform: translateY(-2px);
             box-shadow: 0 0 0 3px #818cf8, 0 4px 10px -2px rgba(129, 140, 248, 0.3);
-            background-color: #4f46e5;
+            background-color: #6366f1; /* Indigo-500 */
         }
         .emotion-btn.selected span:last-child {
             color: white;
+            font-weight: 600;
         }

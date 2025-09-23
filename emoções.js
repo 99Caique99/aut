@@ -1,33 +1,11 @@
-  // --- DOM Elements ---
-        const emotionSelector = document.getElementById("emotion-selector");
+   const emotionSelector = document.getElementById("emotion-selector");
         const formEmocao = document.getElementById("formEmocao");
         const mesSelecionado = document.getElementById("mesSelecionado");
         const anoSelecionado = document.getElementById("anoSelecionado");
         let selectedEmotion = null;
         let graficoEmocoes = null;
 
-        // --- Data ---
         let emocoes = JSON.parse(localStorage.getItem("emocoes")) || [];
-
-        // --- Functions ---
-        
-        // Criar partículas de fundo
-        const createParticles = () => {
-            const container = document.getElementById('particle-container');
-            const particleCount = 30;
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                const size = Math.random() * 3 + 1;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.bottom = `-${Math.random() * 20}%`;
-                particle.style.animationDuration = `${Math.random() * 15 + 10}s`;
-                particle.style.animationDelay = `${Math.random() * 10}s`;
-                container.appendChild(particle);
-            }
-        };
         
         const preencherSeletoresMesAno = () => {
             const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
@@ -58,7 +36,6 @@
             e.preventDefault();
             const data = document.getElementById("dataEmocao").value;
             if (!selectedEmotion || !data) {
-                // Usar um pop-up mais sutil no futuro
                 alert("Por favor, selecione uma emoção e uma data.");
                 return;
             }
@@ -94,7 +71,7 @@
                     datasets: [{
                         data: [contagem.Feliz, contagem.Calmo, contagem.Triste, contagem.Ansioso, contagem.Raiva],
                         backgroundColor: ['#60a5fa', '#818cf8', '#a78bfa', '#facc15', '#fb7185'],
-                        borderColor: 'transparent',
+                        borderColor: 'rgba(240, 249, 255, 0.8)',
                         borderWidth: 4,
                         hoverOffset: 12
                     }]
@@ -108,32 +85,33 @@
                             display: true,
                             position: 'bottom',
                             labels: {
-                                color: '#94a3b8', // Cor da legenda
+                                color: '#475569',
                                 padding: 20,
                                 usePointStyle: true,
                                 pointStyle: 'circle'
                             }
                         },
                         tooltip: {
-                            backgroundColor: '#1e293b',
+                            backgroundColor: '#ffffff',
+                            titleColor: '#334155',
+                            bodyColor: '#475569',
                             titleFont: { size: 14 },
                             bodyFont: { size: 12 },
                             padding: 10,
-                            cornerRadius: 8
+                            cornerRadius: 8,
+                            borderColor: '#e2e8f0',
+                            borderWidth: 1
                         }
                     }
                 }
             });
         };
 
-        // --- Event Listeners ---
         emotionSelector.addEventListener("click", handleEmotionSelection);
         formEmocao.addEventListener("submit", handleFormSubmit);
         mesSelecionado.addEventListener("change", atualizarGraficoEmocoes);
         anoSelecionado.addEventListener("change", atualizarGraficoEmocoes);
 
-        // --- Initializations ---
         document.getElementById("dataEmocao").valueAsDate = new Date();
         preencherSeletoresMesAno();
         atualizarGraficoEmocoes();
-        createParticles();

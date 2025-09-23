@@ -15,15 +15,27 @@
     <link rel="stylesheet" href="emoções.css">
 </head>
 <body class="animated-gradient-bg min-h-screen flex items-center justify-center p-4">
+    <div class="particle-bg">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
-    <main class="w-full max-w-lg mx-auto glassmorphism-card rounded-3xl shadow-2xl p-6 md:p-8 space-y-6">
+    <main class="w-full max-w-lg mx-auto glass-card rounded-3xl shadow-2xl p-6 md:p-8 space-y-6">
 
-        <h1 class="text-3xl font-bold text-center text-slate-700">Qual a emoção de hoje?</h1>
-
+        <div class="relative flex items-center justify-center mb-4">
+            <a href="#" onclick="window.history.back(); return false;" title="Voltar" class="absolute left-0 p-2 rounded-full transition-colors hover:bg-black/10">
+                <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </a>
+            <h1 class="text-3xl font-bold text-center text-slate-700">Como você se sente?</h1>
+        </div>
+        
         <!-- Formulário de Registro -->
         <form id="formEmocao" class="space-y-6">
             <div>
-                <label class="block text-center text-slate-600 mb-4">Selecione uma emoção:</label>
                 <div id="emotion-selector" class="grid grid-cols-3 sm:grid-cols-5 gap-3">
                     <button type="button" data-emotion="Feliz" class="emotion-btn flex flex-col items-center p-3 bg-white/70 rounded-xl shadow-md space-y-2">
                         <span class="text-4xl">😊</span>
@@ -55,7 +67,7 @@
         </form>
 
         <!-- Área do Gráfico -->
-        <div class="grafico-area space-y-4">
+        <div class="grafico-area space-y-4 pt-4 border-t border-slate-300/50">
             <h2 class="text-xl font-semibold text-center text-slate-700">Resumo do Mês</h2>
             <div class="flex justify-center items-center gap-4 text-sm">
                 <select id="mesSelecionado" class="bg-white/70 border-none rounded-md p-2 text-slate-600 focus:ring-2 focus:ring-indigo-400"></select>

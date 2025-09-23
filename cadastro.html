@@ -7,34 +7,33 @@
   <link rel="stylesheet" href="cadastro.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Cadastro da Criança</h1>
-    <form id="formCadastro">
-      <div class="form-group">
-        <label for="nome">Nome da Criança</label>
-        <input type="text" id="nome" required>
-      </div>
-      <div class="form-group">
-        <label for="idade">Idade</label>
-        <input type="number" id="idade" required>
-      </div>
-      <div class="form-group">
-        <label for="diagnostico">Diagnóstico</label>
-        <input type="text" id="diagnostico">
-      </div>
-      <div class="form-group">
-        <label for="observacoes">Observações</label>
-        <textarea id="observacoes" rows="4"></textarea>
-      </div>
-      <button type="submit">Salvar</button>
-    </form>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="info-salva-container">
-      <h2>Informações Salvas</h2>
-      <div id="infoSalva"></div>
+    <div class="aurora-bg">
+        <div class="aurora-outer"></div>
     </div>
-  </div>
 
+    <main class="w-full max-w-md mx-auto glass-card rounded-2xl shadow-2xl p-6 md:p-8 space-y-6">
+
+        <div class="relative flex items-center justify-center">
+             <a href="#" onclick="window.history.back(); return false;" title="Voltar" class="absolute left-0 p-2 rounded-full transition-colors hover:bg-black/10">
+                <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </a>
+            <h1 class="text-3xl font-bold text-center text-slate-700">Cadastro da Criança</h1>
+        </div>
+        
+        <form id="formCadastro" class="space-y-4">
+            <input type="text" id="nome" placeholder="Nome da Criança" required class="w-full p-3 bg-white/50 text-slate-700 placeholder:text-slate-500 rounded-lg border border-transparent focus:ring-2 focus:ring-indigo-400 focus:outline-none transition">
+            <input type="number" id="idade" placeholder="Idade" required class="w-full p-3 bg-white/50 text-slate-700 placeholder:text-slate-500 rounded-lg border border-transparent focus:ring-2 focus:ring-indigo-400 focus:outline-none transition">
+            <input type="text" id="diagnostico" placeholder="Diagnóstico (opcional)" class="w-full p-3 bg-white/50 text-slate-700 placeholder:text-slate-500 rounded-lg border border-transparent focus:ring-2 focus:ring-indigo-400 focus:outline-none transition">
+            <textarea id="observacoes" rows="3" placeholder="Observações (opcional)" class="w-full p-3 bg-white/50 text-slate-700 placeholder:text-slate-500 rounded-lg border border-transparent focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"></textarea>
+            <button type="submit" class="w-full p-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg font-semibold shadow-lg transition transform hover:scale-105">Salvar</button>
+        </form>
+
+        <div id="info-salva-container" class="pt-6 border-t border-slate-300/50">
+            <!-- As informações salvas serão exibidas aqui -->
+        </div>
+    </main>
   <script src="cadastro.js"></script>
 </body>
 </html>
