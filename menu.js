@@ -1,133 +1,95 @@
-// Carregar nome e gênero do usuário e atualizar a saudação
-const nome = localStorage.getItem('nomeUsuario') || '';
-const genero = localStorage.getItem('generoUsuario') || '';
+        document.addEventListener('DOMContentLoaded', () => {
 
-const saudacaoEl = document.getElementById('saudacao');
-if (nome && genero) {
-  // Personaliza a saudação conforme o gênero
-  let prefixo = '';
-  if (genero.toLowerCase() === 'mamãe') prefixo = 'Bem-vinda,';
-  else if (genero.toLowerCase() === 'papai') prefixo = 'Bem-vindo,';
-  else prefixo = 'Bem-vindo(a),';
+            /**
+             * Adiciona compromissos de exemplo ao localStorage se não houver nenhum.
+             * Útil para demonstração e desenvolvimento.
+     
 
-  saudacaoEl.textContent = `${prefixo} ${genero.charAt(0).toUpperCase() + genero.slice(1)} ${nome}!`;
-} else {
-  saudacaoEl.textContent = "Bem-vindo(a)!";
-}
+            /**
+             * Anima a saudação com um efeito de "máquina de escrever".
+             * @param {HTMLElement} el - O elemento HTML da saudação.
+             * @param {string} text - O texto a ser exibido.
+             */
+            function animarSaudacao(el, text) {
+                let i = 0;
+                el.textContent = '';
+                const typing = setInterval(() => {
+                    if (i < text.length) {
+                        el.textContent += text.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(typing);
+                    }
+                }, 50); // Velocidade da digitação
+            }
 
-// Função para exibir apenas o próximo compromisso
-function displayNextAppointment() {
-  const appointments = getAppointments();
+            /**
+             * Carrega os dados do usuário e personaliza a saudação na tela.
+             */
+            function personalizarSaudacao() {
+                const nome = localStorage.getItem('nomeUsuario') || '';
+                const genero = localStorage.getItem('generoUsuario') || '';
+                const saudacaoEl = document.getElementById('saudacao');
+                let textoFinal = "Olá! Bem-vindo(a)!";
 
-  if (appointments.length === 0) {
-    document.getElementById('appointments-list').innerHTML = '<li>Nenhum compromisso agendado.</li>';
-    return;
-  }
+                if (nome && genero) {
+                    let prefixo = 'Bem-vindo(a),';
+                    if (genero.toLowerCase() === 'mamãe') prefixo = 'Bem-vinda,';
+                    else if (genero.toLowerCase() === 'papai') prefixo = 'Bem-vindo,';
+                    
+                    const generoCapitalizado = genero.charAt(0).toUpperCase() + genero.slice(1);
+                    textoFinal = `${prefixo} ${generoCapitalizado} ${nome}!`;
+                }
+                
+                animarSaudacao(saudacaoEl, textoFinal);
+            }
 
-  // Data e hora atuais
-  const now = new Date();
+            /**
+             * Busca, filtra e exibe os próximos 3 compromissos futuros.
+             */
+            function mostrarProximosCompromissos() {
+                const compromissos = JSON.parse(localStorage.getItem('appointments') || '[]');
+                const agora = new Date();
 
-  // Convertendo data e hora para comparação exata
-  const futureAppointments = appointments
-    .map(app => {
-      const dateTimeStr = `${app.date} ${app.time || '00:00'}`;
-      return {
-        ...app,
-        fullDate: new Date(dateTimeStr)
-      };
-    })
-    .filter(app => app.fullDate >= now) // Filtra compromissos futuros
-    .sort((a, b) => a.fullDate - b.fullDate); // Ordena por data
+                const proximosCompromissos = compromissos
+                    .map(c => ({ ...c, fullDate: new Date(`${c.date}T${c.time || '00:00:00'}`) }))
+                    .filter(c => c.fullDate >= agora)
+                    .sort((a, b) => a.fullDate - b.fullDate)
+                    .slice(0, 3);
 
-  // Se houver compromissos, pega apenas o primeiro
-  const nextAppointment = futureAppointments[0];
+                const listaEl = document.getElementById('lista-compromissos');
+                listaEl.innerHTML = '';
 
-  if (!nextAppointment) {
-    document.getElementById('appointments-list').innerHTML = '<li>Nenhum compromisso futuro encontrado.</li>';
-    return;
-  }
+                if (proximosCompromissos.length === 0) {
+                    listaEl.innerHTML = '<li class="nenhum-compromisso">Você não tem compromissos futuros.</li>';
+                    return;
+                }
 
-  const listElement = document.getElementById('appointments-list');
-  listElement.innerHTML = '';
+                proximosCompromissos.forEach((c, index) => {
+                    const li = document.createElement('li');
+                    li.style.animationDelay = `${index * 0.1 + 0.8}s`; // Animação escalonada
+                    
+                    const dataFormatada = c.fullDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+                    const horaFormatada = c.fullDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-  const li = document.createElement('li');
-  li.classList.add(nextAppointment.category ? nextAppointment.category.toLowerCase() : '');
+                    li.innerHTML = `
+                        <div class="compromisso-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+                        </div>
+                        <div class="compromisso-details">
+                            <strong>${c.title}</strong>
+                            <p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                ${c.location || 'Local não informado'}
+                            </p>
+                        </div>
+                    `;
+                    listaEl.appendChild(li);
+                });
+            }
 
-  li.innerHTML = `
-    <strong>${nextAppointment.title}</strong>
-    <p><b>Data:</b> ${nextAppointment.fullDate.toLocaleDateString()}</p>
-    <p><b>Hora:</b> ${nextAppointment.time || 'Não especificada'}</p>
-    <p><b>Local:</b> ${nextAppointment.location || 'Não informado'}</p>
-    <p><b>Categoria:</b> ${nextAppointment.category || 'Não especificada'}</p>
-  `;
-  listElement.appendChild(li);
-}
-
-// Chama a função para exibir o próximo compromisso ao carregar a página
-document.addEventListener('DOMContentLoaded', displayNextAppointment);
-// Adiciona um evento de clique ao botão "Ver todos os compromissos" 
-document.getElementById('view-all-appointments').addEventListener('click', function() {
-  const appointments = getAppointments();
-  const listElement = document.getElementById('appointments-list');
-  listElement.innerHTML = '';
-
-  if (appointments.length === 0) {
-    listElement.innerHTML = '<li>Nenhum compromisso agendado.</li>';
-    return;
-  }
-
-  appointments.forEach(app => {
-    const li = document.createElement('li');
-    li.classList.add(app.category ? app.category.toLowerCase() : '');
-
-    li.innerHTML = `
-      <strong>${app.title}</strong>
-      <p><b>Data:</b> ${app.date}</p>
-      <p><b>Hora:</b> ${app.time || 'Não especificada'}</p>
-      <p><b>Local:</b> ${app.location || 'Não informado'}</p>
-      <p><b>Categoria:</b> ${app.category || 'Não especificada'}</p>
-    `;
-    listElement.appendChild(li);
-  });
-});
-// Adiciona um evento de clique ao botão "Adicionar Compromisso"      function mostrarProximosCompromissos() {
-  // Busca compromissos do localStorage (chave correta: 'appointments')
-  let compromissos = JSON.parse(localStorage.getItem('appointments') || '[]');
-  const agora = new Date();
-
-  // Monta datas completas para comparação
-  compromissos = compromissos
-    .map(c => {
-      const dataHora = `${c.date} ${c.time || '00:00'}`;
-      return {
-        ...c,
-        fullDate: new Date(dataHora)
-      };
-    })
-    .filter(c => c.fullDate >= agora)
-    .sort((a, b) => a.fullDate - b.fullDate)
-    .slice(0, 3);
-
-  const lista = document.getElementById('lista-compromissos');
-  lista.innerHTML = '';
-
-  if (compromissos.length === 0) {
-    lista.innerHTML = '<li>Nenhum compromisso futuro.</li>';
-    return;
-  }
-
-  compromissos.forEach(c => {
-    const li = document.createElement('li');
-    li.classList.add(c.category ? c.category.toLowerCase() : '');
-    li.innerHTML = `
-      <strong>${c.title}</strong>
-      <br>
-      <span>${c.fullDate.toLocaleDateString('pt-BR')} ${c.fullDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span>
-      ${c.location ? `<br><span>Local: ${c.location}</span>` : ''}
-      ${c.category ? `<br><span>Categoria: ${c.category}</span>` : ''}
-    `;
-    lista.appendChild(li);
-  });
-
-
-document.addEventListener('DOMContentLoaded', mostrarProximosCompromissos);
+            // --- INICIALIZAÇÃO ---
+            criarCompromissosDeExemplo();
+            personalizarSaudacao();
+            mostrarProximosCompromissos();
+        });

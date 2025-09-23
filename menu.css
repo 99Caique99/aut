@@ -1,472 +1,257 @@
-/* ...existing code... */
+    /* --- GERAL E RESET --- */
+        *, *::before, *::after {
+          box-sizing: border-box;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
 
-/* Efeito de fundo com gradiente e peças de quebra-cabeça */
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #a7e9f7 0%, #f7d6e0 100%);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  position: relative;
-  overflow-x: hidden;
-}
+        :root {
+          --color-primary: #6d5ff6;
+          --color-secondary: #8378ff;
+          --color-accent: #ff8d78;
+          --color-text: #2c3e50;
+          --color-bg-start: #fce3ec;
+          --color-bg-end: #e8e6ff;
+          --card-bg: rgba(255, 255, 255, 0.5);
+          --shadow-color: rgba(109, 95, 246, 0.15);
+          --border-radius: 24px;
+        }
 
-/* Quebra-cabeça decorativo */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url('https://cdn.pixabay.com/photo/2013/07/13/12/46/puzzle-146849_1280.png') repeat;
-  opacity: 0.04;
-  pointer-events: none;
-  z-index: 0;
-}
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+          font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          background: linear-gradient(135deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+          color: var(--color-text);
+        }
 
-/* Container do menu */
-.menu-container {
-  background: rgba(255,255,255,0.95);
-  padding: 48px 32px 32px 32px;
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 0 #a7e9f7 inset;
-  text-align: center;
-  width: 100%;
-  max-width: 400px;
-  margin: 40px auto 0 auto;
-  position: relative;
-  z-index: 2;
-  animation: floatIn 1s cubic-bezier(.23,1.02,.67,1.01);
-}
+        body {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          flex-direction: column;
+          padding: 20px 15px;
+          min-height: 100vh;
+        }
 
-@keyframes floatIn {
-  from { opacity: 0; transform: translateY(40px) scale(0.98);}
-  to   { opacity: 1; transform: translateY(0) scale(1);}
-}
+        /* --- FUNDO ANIMADO COM PEÇAS --- */
+        .puzzle-bg {
+          position: fixed;
+          top: 0; left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: -1;
+          pointer-events: none;
+          overflow: hidden;
+        }
 
-/* Botões do menu com efeito de brilho e sombra */
-.opcoes button {
-  display: block;
-  width: 100%;
-  margin: 18px 0;
-  padding: 22px;
-  font-size: 1.4rem;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient(90deg, #5de0f7 0%, #b7b6f7 100%);
-  color: #222;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(93,224,247,0.13), 0 1.5px 0 #f7d6e0 inset;
-  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-  position: relative;
-  overflow: hidden;
-}
+        .puzzle-piece {
+          position: absolute;
+          opacity: 0;
+          width: 60px;
+          height: 60px;
+          background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="rgba(109, 95, 246, 0.2)" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+          background-size: contain;
+          background-repeat: no-repeat;
+          animation: floatAndFade var(--d) infinite alternate ease-in-out;
+          top: var(--t);
+          left: var(--l);
+        }
 
-.opcoes button::after {
-  content: "";
-  position: absolute;
-  left: -75%;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
-  transform: skewX(-20deg);
-  transition: left 0.5s;
-}
+        @keyframes floatAndFade {
+          0% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 0; }
+          25%, 75% { opacity: 1; }
+          100% { transform: translateY(40px) rotate(20deg) scale(1.1); opacity: 0; }
+        }
 
-.opcoes button:hover {
-  background: linear-gradient(90deg, #f7d6e0 0%, #5de0f7 100%);
-  color: #222;
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 8px 32px rgba(93,224,247,0.18), 0 1.5px 0 #b7b6f7 inset;
-}
 
-.opcoes button:hover::after {
-  left: 120%;
-}
+        /* --- CONTAINERS E CARDS --- */
+        .main-container {
+          width: 100%;
+          max-width: 450px;
+        }
 
-/* Próximos compromissos com efeito glassmorphism e animação */
-.proximos-compromissos {
-  margin-top: 32px;
-  background: rgba(255,255,255,0.85);
-  border-radius: 18px;
-  padding: 22px 18px 18px 18px;
-  box-shadow: 0 8px 32px rgba(93,224,247,0.13), 0 1.5px 0 #b7b6f7 inset;
-  backdrop-filter: blur(4px);
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 2;
-  animation: fadeInUp 1.2s cubic-bezier(.23,1.02,.67,1.01);
-}
+        .card {
+          background: var(--card-bg);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          border-radius: var(--border-radius);
+          box-shadow: 0 12px 40px var(--shadow-color);
+          padding: 30px;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+          animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px);}
-  to   { opacity: 1; transform: translateY(0);}
-}
+        /* Efeito Aurora na Borda */
+        .card::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          border-radius: var(--border-radius);
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,255,255,0));
+          -webkit-mask: 
+             linear-gradient(#fff 0 0) content-box, 
+             linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+                  mask-composite: exclude;
+        }
 
-.proximos-compromissos h2 {
-  font-size: 1.3rem;
-  margin-bottom: 14px;
-  color: #009688;
-  letter-spacing: 1px;
-  text-shadow: 0 1px 0 #fff;
-}
 
-.proximos-compromissos ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+        .compromissos-card {
+          margin-top: 30px;
+          animation-delay: 0.2s;
+        }
 
-.proximos-compromissos li {
-  margin-bottom: 14px;
-  font-size: 1.08rem;
-  background: linear-gradient(90deg, #e0f7fa 0%, #f7d6e0 100%);
-  border-radius: 10px;
-  padding: 14px 16px;
-  box-shadow: 0 2px 8px rgba(93,224,247,0.08);
-  color: #333;
-  position: relative;
-  overflow: hidden;
-  border-left: 6px solid #5de0f7;
-  transition: transform 0.2s, box-shadow 0.2s;
-  animation: popIn 0.7s cubic-bezier(.23,1.02,.67,1.01);
-}
+        @keyframes popIn {
+          from { opacity: 0; transform: translateY(40px) scale(0.9); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-@keyframes popIn {
-  from { opacity: 0; transform: scale(0.95);}
-  to   { opacity: 1; transform: scale(1);}
-}
+        #saudacao {
+          font-size: 1.8rem;
+          font-weight: 600;
+          margin: 0 0 24px 0;
+          line-height: 1.2;
+        }
 
-.proximos-compromissos li strong {
-  color: #00796b;
-  font-size: 1.13rem;
-  letter-spacing: 0.5px;
-}
 
-.proximos-compromissos li span {
-  color: #555;
-  font-size: 0.98rem;
-}
+        /* --- BOTÕES DO MENU --- */
+        .opcoes {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
 
-.proximos-compromissos li::before {
-  content: "🧩";
-  position: absolute;
-  left: -8px;
-  top: 10px;
-  font-size: 1.3rem;
-  opacity: 0.25;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
+        .opcoes button {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 15px;
+          padding: 18px 25px;
+          font-size: 1.1rem;
+          font-weight: 600;
+          font-family: 'Poppins', sans-serif;
+          color: #fff;
+          background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+          border: none;
+          border-radius: 16px;
+          cursor: pointer;
+          box-shadow: 0 6px 20px rgba(109, 95, 246, 0.25);
+          transition: all 0.3s ease;
+          transform: translateZ(0); /* Força aceleração de hardware */
+          animation: slideIn 0.6s ease-out both;
+        }
 
-.proximos-compromissos li:hover {
-  transform: scale(1.03) translateX(4px);
-  box-shadow: 0 6px 24px rgba(93,224,247,0.18);
-  background: linear-gradient(90deg, #f7d6e0 0%, #e0f7fa 100%);
-}
+        /* Animação escalonada para os botões */
+        .opcoes button:nth-child(1) { animation-delay: 0.3s; }
+        .opcoes button:nth-child(2) { animation-delay: 0.4s; }
+        .opcoes button:nth-child(3) { animation-delay: 0.5s; }
+        .opcoes button:nth-child(4) { animation-delay: 0.6s; }
+        .opcoes button:nth-child(5) { animation-delay: 0.7s; }
 
-.proximos-compromissos li:hover::before {
-  opacity: 0.5;
-}
+        @keyframes slideIn {
+          from { opacity: 0; transform: translateX(-20px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
 
-/* Responsivo */
-@media (max-width: 600px) {
-  .menu-container,
-  .proximos-compromissos {
-    max-width: 98vw;
-    padding: 18px 6vw;
-  }
-  .opcoes button {
-    font-size: 1.1rem;
-    padding: 16px;
-  }
-}
-/* ...existing code... */
+        .opcoes button:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px rgba(109, 95, 246, 0.35);
+          background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
+        }
 
-/* Fundo com gradiente e peças de quebra-cabeça coloridas */
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #a7e9f7 0%, #f7d6e0 100%);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  position: relative;
-  overflow-x: hidden;
-}
+        .opcoes button:active {
+          transform: translateY(-2px) scale(0.98);
+          box-shadow: 0 4px 15px rgba(109, 95, 246, 0.2);
+        }
 
-/* Peças de quebra-cabeça coloridas no fundo */
-.puzzle-bg {
-  position: fixed;
-  z-index: 1;
-  pointer-events: none;
-  width: 100vw;
-  height: 100vh;
-  top: 0; left: 0;
-  overflow: hidden;
-}
-.puzzle-piece {
-  position: absolute;
-  opacity: 0.18;
-  width: 60px;
-  height: 60px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  animation: floatPuzzle 8s infinite alternate;
-}
-.puzzle-piece.blue    { background-image: url('https://img.icons8.com/color/96/000000/jigsaw-puzzle.png'); top: 10%; left: 5%;  filter: hue-rotate(180deg);}
-.puzzle-piece.yellow  { background-image: url('https://img.icons8.com/color/96/000000/jigsaw-puzzle.png'); top: 60%; left: 80%; filter: hue-rotate(60deg);}
-.puzzle-piece.red     { background-image: url('https://img.icons8.com/color/96/000000/jigsaw-puzzle.png'); top: 80%; left: 10%; filter: hue-rotate(-30deg);}
-.puzzle-piece.green   { background-image: url('https://img.icons8.com/color/96/000000/jigsaw-puzzle.png'); top: 30%; left: 70%; filter: hue-rotate(90deg);}
-@keyframes floatPuzzle {
-  0% { transform: translateY(0) scale(1);}
-  100% { transform: translateY(20px) scale(1.08);}
-}
+        .opcoes button svg {
+          width: 24px;
+          height: 24px;
+        }
 
-/* Cards dos compromissos com peça de quebra-cabeça colorida */
-.proximos-compromissos li {
-  margin-bottom: 14px;
-  font-size: 1.08rem;
-  background: linear-gradient(90deg, #e0f7fa 0%, #f7d6e0 100%);
-  border-radius: 10px;
-  padding: 14px 16px 14px 48px;
-  box-shadow: 0 2px 8px rgba(93,224,247,0.08);
-  color: #333;
-  position: relative;
-  overflow: hidden;
-  border-left: 6px solid #5de0f7;
-  transition: transform 0.2s, box-shadow 0.2s;
-  animation: popIn 0.7s cubic-bezier(.23,1.02,.67,1.01);
-}
+        /* --- SEÇÃO DE COMPROMISSOS --- */
+        .compromissos-card h2 {
+          font-size: 1.4rem;
+          margin: 0 0 20px 0;
+          text-align: left;
+          font-weight: 600;
+        }
 
-/* Peça de quebra-cabeça decorativa no card */
-.proximos-compromissos li::before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 16px;
-  width: 28px;
-  height: 28px;
-  background-image: url('https://img.icons8.com/color/48/000000/jigsaw-puzzle.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.35;
-  filter: drop-shadow(0 2px 2px #fff);
-  transition: opacity 0.3s;
-}
-.proximos-compromissos li:nth-child(1)::before { filter: hue-rotate(180deg) drop-shadow(0 2px 2px #fff);}
-.proximos-compromissos li:nth-child(2)::before { filter: hue-rotate(60deg) drop-shadow(0 2px 2px #fff);}
-.proximos-compromissos li:nth-child(3)::before { filter: hue-rotate(-30deg) drop-shadow(0 2px 2px #fff);}
+        #lista-compromissos {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          text-align: left;
+        }
 
-.proximos-compromissos li:hover {
-  transform: scale(1.03) translateX(4px);
-  box-shadow: 0 6px 24px rgba(93,224,247,0.18);
-  background: linear-gradient(90deg, #f7d6e0 0%, #e0f7fa 100%);
-}
-.proximos-compromissos li:hover::before {
-  opacity: 0.7;
-}
+        #lista-compromissos li {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          background: rgba(255, 255, 255, 0.7);
+          border-radius: 14px;
+          padding: 16px;
+          margin-bottom: 12px;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          animation: popIn 0.5s ease-out both;
+        }
 
-/* ...restante do seu CSS... */
+        #lista-compromissos li:hover {
+          transform: scale(1.03);
+          box-shadow: 0 6px 15px var(--shadow-color);
+        }
 
-/* Responsivo */
-@media (max-width: 600px) {
-  .menu-container,
-  .proximos-compromissos {
-    max-width: 98vw;
-    padding: 18px 6vw;
-  }
-  .opcoes button {
-    font-size: 1.1rem;
-    padding: 16px;
-  }
-  .puzzle-piece { width: 36px; height: 36px;}
-}
-/* ...existing code... */
+        .compromisso-icon {
+          flex-shrink: 0;
+          width: 48px;
+          height: 48px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--color-primary);
+        }
 
-/* Ajuste para evitar rolagem lateral e garantir responsividade */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
+        .compromisso-icon svg {
+          width: 24px;
+          height: 24px;
+          color: white;
+        }
 
-body {
-  min-height: 100vh;
-  min-width: 100vw;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  overflow-y: auto;
-}
+        .compromisso-details strong {
+          display: block;
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: var(--color-text);
+          margin-bottom: 4px;
+        }
 
-/* ...existing code... */
+        .compromisso-details p {
+          margin: 0;
+          font-size: 0.9rem;
+          color: #555;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
 
-/* Peças de quebra-cabeça coloridas no fundo usando SVG inline */
-.puzzle-bg {
-  position: fixed;
-  z-index: 1;
-  pointer-events: none;
-  width: 100vw;
-  height: 100vh;
-  top: 0; left: 0;
-  overflow: hidden;
-}
-.puzzle-piece {
-  position: absolute;
-  opacity: 0.18;
-  width: 60px;
-  height: 60px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  animation: floatPuzzle 8s infinite alternate;
-}
-.puzzle-piece.blue {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="deepskyblue" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 10%; left: 5%;
-}
-.puzzle-piece.yellow {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="gold" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 60%; left: 80%;
-}
-.puzzle-piece.red {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="crimson" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 80%; left: 10%;
-}
-.puzzle-piece.green {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="mediumseagreen" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 30%; left: 70%;
-}
-@keyframes floatPuzzle {
-  0% { transform: translateY(0) scale(1);}
-  100% { transform: translateY(20px) scale(1.08);}
-}
+        .nenhum-compromisso {
+          color: #777;
+          font-style: italic;
+          padding: 20px 0;
+          text-align: center;
+        }
 
-/* Cards dos compromissos com peça de quebra-cabeça decorativa SVG */
-.proximos-compromissos li {
-  margin-bottom: 14px;
-  font-size: 1.08rem;
-  background: linear-gradient(90deg, #e0f7fa 0%, #f7d6e0 100%);
-  border-radius: 10px;
-  padding: 14px 16px 14px 48px;
-  box-shadow: 0 2px 8px rgba(93,224,247,0.08);
-  color: #333;
-  position: relative;
-  overflow: hidden;
-  border-left: 6px solid #5de0f7;
-  transition: transform 0.2s, box-shadow 0.2s;
-  animation: popIn 0.7s cubic-bezier(.23,1.02,.67,1.01);
-}
-
-/* Peça SVG decorativa no card */
-.proximos-compromissos li::before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 16px;
-  width: 28px;
-  height: 28px;
-  background-image: url('data:image/svg+xml;utf8,<svg width="28" height="28" viewBox="0 0 96 96" fill="deepskyblue" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.35;
-  filter: drop-shadow(0 2px 2px #fff);
-  transition: opacity 0.3s;
-}
-.proximos-compromissos li:nth-child(1)::before { filter: drop-shadow(0 2px 2px #fff);}
-.proximos-compromissos li:nth-child(2)::before { filter: hue-rotate(60deg) drop-shadow(0 2px 2px #fff);}
-.proximos-compromissos li:nth-child(3)::before { filter: hue-rotate(-30deg) drop-shadow(0 2px 2px #fff);}
-
-.proximos-compromissos li:hover {
-  transform: scale(1.03) translateX(4px);
-  box-shadow: 0 6px 24px rgba(93,224,247,0.18);
-  background: linear-gradient(90deg, #f7d6e0 0%, #e0f7fa 100%);
-}
-.proximos-compromissos li:hover::before {
-  opacity: 0.7;
-}
-
-/* Responsivo */
-@media (max-width: 600px) {
-  .menu-container,
-  .proximos-compromissos {
-    max-width: 70vw;
-    padding: 18px 6vw;
-  }
-  .opcoes button {
-    font-size: 1.1rem;
-    padding: 16px;
-  }
-  .puzzle-piece { width: 36px; height: 36px;}
-}
-/* ...existing code... */
-
-/* ...existing code... */
-
-.puzzle-piece.blue {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23007aff" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 10%; left: 5%;
-}
-.puzzle-piece.yellow {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ffd600" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 60%; left: 80%;
-}
-.puzzle-piece.red {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ff1744" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 80%; left: 10%;
-}
-.puzzle-piece.green {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%2300c853" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 30%; left: 70%;
-}
-/* Novas peças */
-.puzzle-piece.purple {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%238e24aa" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 20%; left: 50%;
-}
-.puzzle-piece.orange {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ff9100" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 45%; left: 20%;
-}
-.puzzle-piece.pink {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23e040fb" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 75%; left: 60%;
-}
-.puzzle-piece.cyan {
-  background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%2300bcd4" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  top: 55%; left: 40%;
-}
-
-/* ...existing code... */
-
-/* Cards dos compromissos com peça de quebra-cabeça decorativa SVG mais forte */
-.proximos-compromissos li::before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 16px;
-  width: 28px;
-  height: 28px;
-  background-image: url('data:image/svg+xml;utf8,<svg width="28" height="28" viewBox="0 0 96 96" fill="%23007aff" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.5;
-  filter: drop-shadow(0 2px 2px #fff);
-  transition: opacity 0.3s;
-}
-.proximos-compromissos li:nth-child(1)::before { filter: drop-shadow(0 2px 2px #fff);}
-.proximos-compromissos li:nth-child(2)::before { filter: hue-rotate(60deg) drop-shadow(0 2px 2px #fff);}
-.proximos-compromissos li:nth-child(3)::before { filter: hue-rotate(-30deg) drop-shadow(0 2px 2px #fff);}
-
-/* ...existing code... */
-/* ...existing code... */
-/* ...existing code... */
-/* ...existing code... */
+        /* --- RESPONSIVIDADE --- */
+        @media (min-width: 768px) {
+          .main-container {
+            max-width: 500px;
+          }
+        }

@@ -1,176 +1,62 @@
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: linear-gradient(135deg, #a7e9f7 0%, #f7d6e0 100%);
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fundoCalma 10s ease-in-out infinite alternate;
-  background-size: 200% 200%;
-}
-@keyframes fundoCalma {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
+        /* Custom styles for animations and overall theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* New elegant, dark gradient background */
+            background: linear-gradient(to top, #0f172a 0%, #1e293b 100%);
+            overflow: hidden; /* Hide scrollbars and prevent orb overflow */
+        }
 
-.puzzle-bg {
-  position: fixed;
-  z-index: 0;
-  pointer-events: none;
-  width: 100vw;
-  height: 100vh;
-  top: 0; left: 0;
-  overflow: hidden;
-}
-.puzzle-piece {
-  position: absolute;
-  opacity: 0.18;
-  width: 60px;
-  height: 60px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  animation: floatPuzzle 8s infinite alternate;
-}
-.puzzle-piece.blue    { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23007aff" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 10%; left: 5%;}
-.puzzle-piece.yellow  { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ffd600" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 60%; left: 80%;}
-.puzzle-piece.red     { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ff1744" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 80%; left: 10%;}
-.puzzle-piece.green   { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%2300c853" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 30%; left: 70%;}
-.puzzle-piece.purple  { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%238e24aa" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 20%; left: 50%;}
-.puzzle-piece.orange  { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23ff9100" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 45%; left: 20%;}
-.puzzle-piece.pink    { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%23e040fb" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 75%; left: 60%;}
-.puzzle-piece.cyan    { background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="%2300bcd4" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>'); top: 55%; left: 40%;}
-@keyframes floatPuzzle {
-  0% { transform: translateY(0) scale(1);}
-  100% { transform: translateY(20px) scale(1.08);}
-}
+        /* --- Floating Orbs Background Effect (More Subtle) --- */
+        .orb-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-.calma-container {
-  position: relative;
-  z-index: 2;
-  background: rgba(255,255,255,0.97);
-  border-radius: 22px;
-  padding: 38px 24px 32px 24px;
-  box-shadow: 0 8px 32px 0 rgba(0,122,255,0.13);
-  text-align: center;
-  min-width: 260px;
-  max-width: 90vw;
-  margin: 40px auto;
-  animation: fadeInUp 1.2s cubic-bezier(.23,1.02,.67,1.01);
-}
+        .orb {
+            position: absolute;
+            bottom: -80px; /* Start further below the screen */
+            background: rgba(199, 210, 254, 0.1); /* Subtle indigo tint */
+            border-radius: 50%;
+            animation: rise 30s infinite linear;
+            box-shadow: 0 0 20px rgba(199, 210, 254,0.1), 0 0 40px rgba(199, 210, 254,0.05);
+        }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px);}
-  to   { opacity: 1; transform: translateY(0);}
-}
+        /* Assign different sizes, positions, and much longer animation durations */
+        .orb:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 45s; }
+        .orb:nth-child(2) { width: 30px; height: 30px; left: 25%; animation-duration: 35s; animation-delay: 5s; }
+        .orb:nth-child(3) { width: 60px; height: 60px; left: 50%; animation-duration: 50s; animation-delay: 2s; }
+        .orb:nth-child(4) { width: 90px; height: 90px; left: 70%; animation-duration: 40s; animation-delay: 7s; }
+        .orb:nth-child(5) { width: 40px; height: 40px; left: 85%; animation-duration: 55s; animation-delay: 10s; }
 
-.calma-container h1 {
-  color: #e040fb;
-  margin-bottom: 18px;
-  font-size: 2.1rem;
-  letter-spacing: 1px;
-}
+        @keyframes rise {
+            to {
+                transform: translateY(-110vh) translateX(5vw); /* Slower sideways movement */
+                opacity: 0;
+            }
+        }
+        
+        /* Softer breathing animation with a more subtle gradient */
+        .breathing-circle {
+            background: radial-gradient(circle, rgba(165, 180, 252, 0.2) 0%, rgba(165, 180, 252, 0.05) 70%);
+            animation: breathe 8s ease-in-out infinite;
+            box-shadow: 0 0 25px rgba(165, 180, 252, 0.1);
+        }
 
-.calma-circle {
-  margin: 28px auto 18px auto;
-  width: 110px; height: 110px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #a7e9f7 0%, #e040fb 100%);
-  opacity: 0.7;
-  animation: calma-breath 4s infinite;
-  box-shadow:
-    0 0 32px #e040fb55,
-    0 0 0 8px #a7e9f733,
-    0 0 40px 10px #a7e9f7aa inset;
-  border: 3px solid #e040fb55;
-  filter: drop-shadow(0 0 18px #a7e9f7cc);
-}
-@keyframes calma-breath {
-  0%   { transform: scale(1);}
-  40%  { transform: scale(1.25);}
-  60%  { transform: scale(1.25);}
-  100% { transform: scale(1);}
-}
+        @keyframes breathe {
+            0%   { transform: scale(0.95); opacity: 0.8; }
+            50%  { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
 
-.calma-container p {
-  font-size: 1.3rem;
-  color: #007aff;
-  margin-top: 0;
-  margin-bottom: 18px;
-}
-
-.frase-apoio {
-  color: #8e24aa;
-  font-size: 1.1rem;
-  margin-bottom: 18px;
-  margin-top: -8px;
-  font-style: italic;
-  letter-spacing: 0.5px;
-  opacity: 0.85;
-}
-
-.calma-sounds {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  margin-bottom: 18px;
-  margin-top: 12px;
-}
-.play-sound {
-  min-width: 120px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 1.15rem;
-  background: linear-gradient(90deg, #a7e9f7 0%, #e040fb 100%);
-  color: #fff;
-  border: 2px solid #a7e9f7;
-  border-radius: 30px;
-  padding: 10px 28px;
-  box-shadow: 0 2px 12px #e040fb22;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-}
-.play-sound:hover {
-  background: linear-gradient(90deg, #e040fb 0%, #a7e9f7 100%);
-  transform: scale(1.05);
-}
-.play-sound.stop {
-  background: linear-gradient(90deg, #ff1744 0%, #e040fb 100%);
-  border: 2px solid #ff1744;
-}
-.play-sound.stop:hover {
-  background: linear-gradient(90deg, #e040fb 0%, #ff1744 100%);
-}
-
-.close-calma {
-  position: absolute;
-  top: 18px; left: 18px;
-  background: linear-gradient(90deg, #a7e9f7 0%, #e040fb 100%);
-  color: #fff;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  box-shadow: 0 2px 12px #e040fb22;
-  border: none;
-  transition: background 0.3s, color 0.2s, transform 0.2s;
-  z-index: 10;
-}
-.close-calma:hover {
-  background: linear-gradient(90deg, #e040fb 0%, #a7e9f7 100%);
-  color: #ff1744;
-  transform: scale(1.08);
-}
-
-@media (max-width: 600px) {
-  .calma-container { padding: 18px 4vw 18px 4vw; }
-  .calma-circle { width: 70px; height: 70px; }
-  .puzzle-piece { width: 36px; height: 36px;}
-  .close-calma { width: 38px; height: 38px; font-size: 1.5rem; top: 8px; left: 8px;}
-}
+        /* Elegant glow effect for active buttons */
+        .active-sound {
+            background-color: rgba(199, 210, 254, 0.2) !important;
+            box-shadow: 0 0 15px 3px rgba(165, 180, 252, 0.2);
+        }

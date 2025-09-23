@@ -1,85 +1,47 @@
-body {
-  font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(135deg, #e0f7fa, #e3f2fd);
-  margin: 0;
-  padding: 20px;
-}
+ body {
+            font-family: 'Inter', sans-serif;
+            background-color: #00947b; 
+            overflow: hidden;
+            position: relative;
+        }
 
-.container {
-  max-width: 700px;
-  margin: auto;
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(33, 150, 243, 0.2);
-}
+        /* Novo efeito de fundo: um brilho sutil e rotativo com tom azul bebê */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: 0;
+            background-image: radial-gradient(circle at center, rgba(173, 216, 230, 0.1), transparent 40%);
+            animation: rotate-glow 20s linear infinite;
+        }
+        
+        @keyframes rotate-glow {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
-h1, h2 {
-  text-align: center;
-  color: #1565c0;
-}
+        /* Animação para os itens da lista ao aparecerem */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-form {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+        .list-item-enter {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
 
-label {
-  font-weight: 600;
-  color: #0d47a1;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #bbdefb;
-  border-radius: 8px;
-  font-size: 14px;
-  background-color: #f0f8ff;
-}
-
-textarea {
-  resize: vertical;
-}
-
-button {
-  align-self: center  ;
-  background-color: #2196f3;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 14px;
-  transition: background-color 0.3s;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #1976d2;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin-top: 20px;
-}
-
-li {
-  background: #e3f2fd;
-  border-left: 6px solid #42a5f5;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  position: relative;
-}
-
-li::before {
-  content: "🧩";
-  position: absolute;
-  left: -30px;
-  top: 12px;
-  font-size: 20px;
-}
+        /* Esconde a scrollbar mas permite rolar */
+        .custom-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .custom-scrollbar {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }

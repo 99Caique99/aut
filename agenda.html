@@ -1,62 +1,165 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Agenda Especial</title>
-  <link rel="stylesheet" href="agenda.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Especial 🧩</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="agenda.css">
 </head>
-<body>
-
-  
-  <div class="calendar-container">
-    <div class="calendar-header">
-      <button id="prevMonth">❮</button>
-      <h2 id="monthLabel">Mês</h2>
-      <button id="nextMonth">❯</button>
+<body class="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 min-h-screen text-gray-800 p-4 sm:p-6">
+    
+    <!-- Fundo animado -->
+    <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+        <div class="puzzle-piece puzzle-piece-svg" style="top: 10%; left: 5%; animation-duration: 12s; filter: hue-rotate(0deg);"></div>
+        <div class="puzzle-piece puzzle-piece-svg" style="top: 20%; right: 10%; animation-duration: 15s; filter: hue-rotate(45deg);"></div>
+        <div class="puzzle-piece puzzle-piece-svg" style="bottom: 15%; left: 15%; animation-duration: 10s; filter: hue-rotate(90deg);"></div>
+        <div class="puzzle-piece puzzle-piece-svg" style="bottom: 25%; right: 20%; animation-duration: 13s; filter: hue-rotate(135deg);"></div>
+        <div class="puzzle-piece puzzle-piece-svg" style="top: 50%; left: 45%; animation-duration: 11s; filter: hue-rotate(180deg);"></div>
     </div>
     
-    <div class="calendar" id="calendar"></div>
-  </div>
+    <div class="relative z-10 max-w-4xl mx-auto">
+        <!-- Cabeçalho -->
+        <header class="text-center mb-6">
+            <h1 class="text-3xl sm:text-4xl font-bold text-indigo-600">Agenda Especial</h1>
+            <p class="text-gray-500 mt-1">Organize as rotinas com carinho e praticidade.</p>
+             <button onclick="window.location.href='menu.html'" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
+                Voltar ao Menu
+            </button>
+        </header>
 
-  <div class="event-details" id="eventDetails">
-    <h3>Detalhes do Compromisso</h3>
-    <input type="text" id="eventTitle" placeholder="Título do compromisso" />
-    <textarea id="eventDescription" placeholder="Descrição do compromisso"></textarea>
+        <main class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Calendário -->
+            <div class="md:col-span-2 bg-white/70 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-lg shadow-indigo-200/30 border border-gray-200/80">
+                <div class="flex items-center justify-between mb-4">
+                    <button id="prevMonth" class="p-2 rounded-full hover:bg-indigo-100 transition-colors duration-300">
+                        <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <h2 id="monthLabel" class="text-xl font-bold text-center text-gray-700 w-48"></h2>
+                    <button id="nextMonth" class="p-2 rounded-full hover:bg-indigo-100 transition-colors duration-300">
+                        <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+                <div id="calendar" class="grid grid-cols-7 gap-1 text-center"></div>
+            </div>
+
+            <!-- Lista de Eventos do Dia -->
+            <div class="bg-white/70 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-lg shadow-indigo-200/30 border border-gray-200/80">
+                <h3 class="font-bold text-lg mb-3 text-gray-700">Compromissos do dia</h3>
+                <div id="eventList" class="space-y-3 h-80 overflow-y-auto pr-2">
+                    <!-- Eventos serão inseridos aqui -->
+                </div>
+                 <button id="addEventFab" class="w-full mt-4 bg-indigo-500 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition-all transform hover:scale-105 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    Adicionar Evento
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para Adicionar/Editar Evento -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40 flex items-center justify-center p-4 transition-opacity duration-300 hidden">
+        <div id="eventModal" class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 transform transition-transform duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modalTitle" class="text-2xl font-bold text-gray-800">Adicionar Compromisso</h2>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-600 transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <form id="eventForm" class="space-y-5">
+                <input type="hidden" id="eventId">
+
+                <!-- Título -->
+                <div class="relative">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
+                          <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
+                        </svg>
+                    </div>
+                    <input type="text" id="eventTitle" name="eventTitle" required placeholder="Título do Compromisso" class="block w-full rounded-lg border-2 border-transparent bg-gray-100 pl-12 pr-4 py-3 text-gray-900 placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:bg-white transition">
+                </div>
+
+                <!-- Descrição -->
+                <div class="relative">
+                    <div class="pointer-events-none absolute top-3.5 left-0 flex items-center pl-4">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M3.75 2A1.75 1.75 0 002 3.75v12.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0018 16.25V3.75A1.75 1.75 0 0016.25 2H3.75zM6.5 5c0-.276.224-.5.5-.5h6a.5.5 0 010 1h-6a.5.5 0 01-.5-.5zM6 8.5a.5.5 0 00.5.5h6a.5.5 0 000-1h-6a.5.5 0 00-.5.5zm.5 2.5a.5.5 0 01.5-.5h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5z" />
+                        </svg>
+                    </div>
+                    <textarea id="eventDescription" name="eventDescription" rows="3" placeholder="Adicione uma descrição..." class="block w-full rounded-lg border-2 border-transparent bg-gray-100 pl-12 pr-4 py-3 text-gray-900 placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:bg-white transition"></textarea>
+                </div>
+
+                <!-- Horário e Categoria -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Horário -->
+                    <div class="relative">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" /></svg>
+                        </div>
+                        <input type="time" id="eventTime" name="eventTime" class="block w-full rounded-lg border-2 border-transparent bg-gray-100 pl-12 pr-4 py-3 text-gray-900 placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:bg-white transition">
+                    </div>
+                    <!-- Categoria -->
+                    <div class="relative">
+                         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M2 4.25A2.25 2.25 0 014.25 2h11.5A2.25 2.25 0 0118 4.25v8.5A2.25 2.25 0 0115.75 15h-3.105a3.501 3.501 0 001.1 1.663l.975.976a.75.75 0 11-1.06 1.06l-.976-.975a5.001 5.001 0 01-7.07 0l-.976.975a.75.75 0 01-1.06-1.06l.975-.976A3.501 3.501 0 006.355 15H4.25A2.25 2.25 0 012 12.75v-8.5z" /></svg>
+                        </div>
+                        <select id="eventType" name="eventType" class="block w-full appearance-none rounded-lg border-2 border-transparent bg-gray-100 pl-12 pr-10 py-3 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:bg-white transition">
+                            <option value="outro">Outro</option>
+                            <option value="terapia">Terapia</option>
+                            <option value="escola">Escola</option>
+                            <option value="lazer">Lazer</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Botões -->
+                <div class="flex justify-between items-center pt-4">
+                    <button type="button" id="deleteEvent" class="text-red-600 hover:text-red-800 font-medium transition-colors hidden">Excluir</button>
+                    <div class="flex gap-3">
+                         <button type="button" id="cancelEvent" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all transform hover:scale-105">Cancelar</button>
+                        <button type="submit" id="saveEvent" class="px-6 py-2 text-sm font-medium text-white bg-indigo-500 border border-transparent rounded-lg shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all transform hover:scale-105">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     
-    <select id="eventType">
-      <option value="">Selecione o tipo</option>
-      <option value="terapia">Terapia</option>
-      <option value="escola">Escola</option>
-      <option value="lazer">Lazer</option>
-      <option value="outro">Outro</option>
-    </select>
-
-    <div class="buttons">
-      <button id="saveEvent">Salvar</button>
-      <button id="editEvent" style="display: none;">Editar</button>
-      <button id="cancelEvent">Cancelar</button>
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmOverlay" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity duration-300 hidden">
+        <div id="confirmModal" class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center transform transition-transform duration-300">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium leading-6 text-gray-900 mt-4" id="confirmTitle">Excluir Compromisso</h3>
+            <div class="mt-2">
+                <p class="text-sm text-gray-500" id="confirmMessage">Tem certeza que deseja excluir este item? Esta ação não pode ser desfeita.</p>
+            </div>
+            <div class="mt-6 flex justify-center gap-4">
+                <button type="button" id="confirmCancel" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-transform transform hover:scale-105">
+                    Cancelar
+                </button>
+                <button type="button" id="confirmOk" class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-lg shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-transform transform hover:scale-105">
+                    Sim, Excluir
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
-<div class="modal-overlay" id="modalOverlay">
-  <div class="event-details" id="eventDetails">
-    <button class="close-modal" onclick="closeModal()">×</button>
-    <input type="text" id="eventTitle" placeholder="Título do evento">
-    <textarea id="eventDescription" placeholder="Descrição do evento"></textarea>
-    <select id="eventCategory">
-      <option value="">Selecione uma categoria</option>
-      <option value="terapia">Terapia</option>
-      <option value="escola">Escola</option>
-      <option value="lazer">Lazer</option>
-      <option value="outro">Outro</option>
-    </select>
-    <div class="buttons">
-      <button onclick="saveEvent()">Salvar</button>
-      <button onclick="deleteEvent()">Excluir</button>
-    </div>
-  </div>
-</div>
 
-  <script src="agenda.js"></script>
+
+    <script src="agenda.js"></script>
 </body>
 </html>

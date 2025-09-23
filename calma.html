@@ -1,74 +1,174 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modo Calma</title>
-  <link rel="stylesheet" href="calma.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Calma</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Tone.js for audio generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <link rel="stylesheet" href="calma.css">
 </head>
-<body>
-  <div class="puzzle-bg">
-    <div class="puzzle-piece blue"></div>
-    <div class="puzzle-piece yellow"></div>
-    <div class="puzzle-piece red"></div>
-    <div class="puzzle-piece green"></div>
-    <div class="puzzle-piece purple"></div>
-    <div class="puzzle-piece orange"></div>
-    <div class="puzzle-piece pink"></div>
-    <div class="puzzle-piece cyan"></div>
-  </div>
-  <div class="calma-container">
-    <button class="close-calma" onclick="window.history.back()" title="Voltar">&larr;</button>
-    <h1>Modo Calma</h1>
-    <div class="calma-circle" id="calma-circle"></div>
-    <p id="calma-text">Inspire...</p>
+<body class="flex items-center justify-center min-h-screen">
     
-<div class="calma-sounds">
-  <button class="play-sound" onclick="playCalmaSound('nature')">🌳 Natureza</button>
-  <button class="play-sound" onclick="playCalmaSound('mar')">🌊 Mar</button>
-  <button class="play-sound" onclick="playCalmaSound('chuva')">🌧️ Chuva</button>
-  <button class="play-sound" onclick="playCalmaSound('musica')">🎵 Música Suave</button>
-  <button class="play-sound stop" onclick="stopCalmaSound()">⏹️ Parar Som</button>
-</div>
-<audio id="audio-nature" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae0e7.mp3" controls style="display:none"></audio>
-<audio id="audio-mar" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b273b.mp3" controls style="display:none"></audio>
-<audio id="audio-chuva" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae0e7.mp3" controls style="display:none"></audio>
-<audio id="audio-musica" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12c6b7b2b2.mp3" controls style="display:none"></audio>
- <script>
-  // Respiração guiada
-  const calmaText = document.getElementById('calma-text');
-  const frases = ['Inspire...', 'Segure...', 'Expire...', 'Relaxe...'];
-  let fase = 0;
-  setInterval(() => {
-    fase = (fase + 1) % frases.length;
-    calmaText.textContent = frases[fase];
-  }, 4000);
+    <!-- Container for floating orbs -->
+    <div class="orb-container">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
 
-  // Sons relaxantes
-  let currentAudio = null;
-  function playCalmaSound(tipo) {
-    stopCalmaSound();
-    let audioId = '';
-    if (tipo === 'nature') audioId = 'audio-nature';
-    if (tipo === 'mar') audioId = 'audio-mar';
-    if (tipo === 'chuva') audioId = 'audio-chuva';
-    if (tipo === 'musica') audioId = 'audio-musica';
-    currentAudio = document.getElementById(audioId);
-    if (currentAudio) {
-      currentAudio.currentTime = 0;
-      currentAudio.play();
-    }
-  }
-  function stopCalmaSound() {
-    const audios = [
-      document.getElementById('audio-nature'),
-      document.getElementById('audio-mar'),
-      document.getElementById('audio-chuva'),
-      document.getElementById('audio-musica')
-    ];
-    audios.forEach(a => { if (a) { a.pause(); a.currentTime = 0; } });
-    currentAudio = null;
-  }
-</script>
+    <div class="w-11/12 max-w-sm p-8 space-y-6 text-center bg-slate-900/40 backdrop-blur-2xl rounded-3xl shadow-2xl z-10 border border-white/10">
+        <!-- Header -->
+        <h1 class="text-3xl font-light text-slate-200">Modo Calma</h1>
+        
+        <!-- Breathing Animation Circle -->
+        <div id="breathing-circle" class="w-32 h-32 mx-auto rounded-full breathing-circle transition-transform duration-[4000ms] ease-in-out flex items-center justify-center">
+            <span id="breathing-text" class="text-xl font-normal text-slate-300 transition-opacity duration-1000">Inspire</span>
+        </div>
+        
+        <!-- Sound Options -->
+        <div>
+            <p class="mb-4 text-slate-400">Escolha um som para relaxar</p>
+            <div class="grid grid-cols-2 gap-4">
+                <button data-sound="nature" class="sound-btn py-3 px-4 bg-white/5 text-slate-300 rounded-xl shadow-lg hover:bg-white/10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-slate-400">🌳 Natureza</button>
+                <button data-sound="sea" class="sound-btn py-3 px-4 bg-white/5 text-slate-300 rounded-xl shadow-lg hover:bg-white/10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-slate-400">🌊 Mar</button>
+                <button data-sound="rain" class="sound-btn py-3 px-4 bg-white/5 text-slate-300 rounded-xl shadow-lg hover:bg-white/10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-slate-400">🌧️ Chuva</button>
+                <button data-sound="music" class="sound-btn py-3 px-4 bg-white/5 text-slate-300 rounded-xl shadow-lg hover:bg-white/10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-slate-400">🎵 Música</button>
+            </div>
+             <button id="stop-btn" class="w-full py-3 mt-4 text-slate-300 bg-red-500/20 rounded-xl shadow-lg hover:bg-red-500/30 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-red-400">⏹️ Parar Som</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Breathing Animation Logic ---
+        const breathingText = document.getElementById('breathing-text');
+        const breathingCircle = document.getElementById('breathing-circle');
+        const instructions = ['Inspire', 'Segure', 'Expire', 'Pausa'];
+        let instructionIndex = 0;
+
+        setInterval(() => {
+            instructionIndex = (instructionIndex + 1) % instructions.length;
+            
+            breathingText.style.opacity = '0';
+            setTimeout(() => {
+                breathingText.textContent = instructions[instructionIndex];
+                breathingText.style.opacity = '1';
+            }, 1000);
+
+            if (instructions[instructionIndex] === 'Inspire') {
+                breathingCircle.style.transform = 'scale(1.1)';
+            } else if (instructions[instructionIndex] === 'Expire') {
+                breathingCircle.style.transform = 'scale(0.9)';
+            }
+
+        }, 4000);
+
+        // --- Sound Generation Logic with Tone.js ---
+        const soundButtons = document.querySelectorAll('.sound-btn');
+        const stopButton = document.getElementById('stop-btn');
+        let currentSound = null;
+        let activeSynth = null;
+
+        const stopAllSounds = () => {
+            if (activeSynth) {
+                if (Array.isArray(activeSynth)) {
+                    activeSynth.forEach(node => node.dispose());
+                } else {
+                    activeSynth.dispose();
+                }
+                activeSynth = null;
+            }
+            Tone.Transport.stop();
+            Tone.Transport.cancel();
+            currentSound = null;
+            soundButtons.forEach(btn => btn.classList.remove('active-sound'));
+        };
+
+        // --- Refined Sound Creation Functions ---
+        const createSound = {
+            nature: () => {
+                const wind = new Tone.Noise('pink').toDestination();
+                const filter = new Tone.AutoFilter('1n').toDestination().start();
+                wind.connect(filter);
+                wind.volume.value = -35;
+                wind.start();
+
+                const birds = new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.005, decay: 0.1, sustain: 0, release: 0.2 } }).toDestination();
+                birds.volume.value = -22;
+
+                const birdPattern = new Tone.Sequence((time, note) => { birds.triggerAttackRelease(note, '32n', time); }, ['G5', null, 'A5', null, 'E5', null, null, 'C6', null, 'A5', null], '1m').start(0);
+                birdPattern.probability = 0.3; // Less frequent
+                
+                return [wind, filter, birds, birdPattern];
+            },
+            sea: () => {
+                // Remade for a much calmer, consistent "shhh" sound
+                const waves = new Tone.Noise('pink').toDestination();
+                waves.volume.value = -24; // Quieter
+                const filter = new Tone.AutoFilter({
+                    frequency: '0.1Hz', // Very slow modulation
+                    baseFrequency: 400, // Lower base frequency for less hiss
+                    octaves: 2 // Fewer octaves for less dramatic sweeping
+                }).toDestination().start();
+                waves.connect(filter);
+                waves.start();
+                return [waves, filter];
+            },
+            rain: () => {
+                const rain = new Tone.Noise('brown').toDestination(); // Brown noise is deeper
+                const filter = new Tone.Filter(1200, 'lowpass').toDestination();
+                rain.connect(filter);
+                rain.volume.value = -26;
+                rain.start();
+                return [rain, filter];
+            },
+            music: () => {
+                const reverb = new Tone.Reverb(8).toDestination(); // Longer reverb tail
+                const feedbackDelay = new Tone.FeedbackDelay("4n", 0.6).connect(reverb);
+                const synth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.2, decay: 1, sustain: 0.2, release: 3 }
+                }).connect(feedbackDelay);
+                synth.volume.value = -18;
+                
+                const melody = new Tone.Sequence((time, note) => {
+                    synth.triggerAttackRelease(note, '1m', time);
+                }, [['C3', 'G3'], 'E4', 'D4', ['C4', 'G4']], '1m').start(0);
+                melody.humanize = true;
+
+                return [synth, melody, reverb, feedbackDelay];
+            }
+        };
+
+        soundButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                if (Tone.context.state !== 'running') {
+                    await Tone.start();
+                }
+                const soundType = button.dataset.sound;
+                
+                if (currentSound === soundType) {
+                    stopAllSounds();
+                } else {
+                    stopAllSounds();
+                    activeSynth = createSound[soundType]();
+                    Tone.Transport.start();
+                    currentSound = soundType;
+                    button.classList.add('active-sound');
+                }
+            });
+        });
+        
+        stopButton.addEventListener('click', stopAllSounds);
+
+    </script>
 </body>
 </html>

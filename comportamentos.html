@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Comportamentos</title>
-  <link rel="stylesheet" href="comportamentos.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Comportamentos</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="comportamentos.css">
 </head>
-<body>
-  <div class="container">
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <main class="w-full max-w-2xl mx-auto bg-slate-900/40 backdrop-blur-2xl rounded-2xl shadow-2xl p-6 md:p-8 text-white border border-white/10 z-10">
+
+        <h1 class="text-3xl font-bold text-center mb-6 text-slate-100">Registro de Comportamentos</h1>
+
+        <form id="formComportamento" class="space-y-4 mb-8">
+            <input type="text" id="comportamento" placeholder="Qual comportamento você observou?" required class="w-full p-3 bg-white/5 rounded-lg border border-white/10 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="date" id="data" required class="w-full p-3 bg-white/5 rounded-lg border border-white/10 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition" style="color-scheme: dark;">
+                <textarea id="obsComportamento" rows="1" placeholder="Observações..." class="w-full p-3 bg-white/5 rounded-lg border border-white/10 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"></textarea>
+            </div>
+            <button type="submit" id="submit-button" class="w-full p-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold shadow-lg transition transform hover:scale-105">Adicionar Registro</button>
+        </form>
+
+        <div>
+            <h2 class="text-xl font-semibold mb-4 text-center text-slate-200">Histórico</h2>
+            <ul id="listaComportamentos" class="space-y-3 max-h-60 overflow-y-auto custom-scrollbar pr-2">
+                <!-- Itens da lista serão inseridos aqui -->
+            </ul>
+        </div>
+    </main>
     
-    <button class="voltar-btn" onclick="window.history.back()" title="Voltar">&larr; Voltar</button>
-   
-    <h1>💙 Registro de Comportamentos</h1>
-
-    <form id="formComportamento">
-      <label for="comportamento">Comportamento:</label>
-      <input type="text" id="comportamento" placeholder="Ex: Agressividade, Estereotipia..." required>
-
-      <label for="data">Data:</label>
-      <input type="date" id="data" required>
-
-      <label for="obsComportamento">Observações:</label>
-      <textarea id="obsComportamento" rows="3" placeholder="Ex: Ocorrência após frustração..."></textarea>
-
-      <button type="submit">➕ Adicionar</button>
-    </form>
-
-    <h2>📋 Lista de Comportamentos</h2>
-    <ul id="listaComportamentos"></ul>
-  </div>
-
-  <script src="comportamentos.js"></script>
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="delete-modal" class="fixed inset-0 bg-black/60 items-center justify-center hidden z-50">
+        <div class="bg-slate-800 rounded-lg p-6 shadow-xl border border-white/10 text-center">
+            <h3 class="text-lg font-medium text-slate-100">Confirmar Exclusão</h3>
+            <p class="text-slate-400 mt-2 mb-4">Você tem certeza que deseja excluir este registro?</p>
+            <div class="flex justify-center gap-4">
+                <button id="cancel-delete" class="px-4 py-2 bg-slate-600 hover:bg-slate-500 rounded-md transition">Cancelar</button>
+                <button id="confirm-delete" class="px-4 py-2 bg-red-600 hover:bg-red-500 rounded-md transition">Excluir</button>
+            </div>
+        </div>
+    </div>
+    <script src="comportamentos.js"></script>
 </body>
 </html>
+

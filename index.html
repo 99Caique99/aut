@@ -1,47 +1,144 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bem-vindo</title>
-  <link rel="stylesheet" href="entrada.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo(a) 🧩</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="entrada.css">
+
 </head>
-<body>
-  <div class="entrada-container">
-    <h1>Seja bem-vindo(a)!</h1>
-    <p>Vamos personalizar sua experiência 🧡</p>
+<body class="bg-gradient-to-br from-blue-100 via-pink-100 to-purple-100 min-h-screen flex items-center justify-center p-4 overflow-hidden">
 
-    <form id="formEntrada">
-      <input type="text" id="nome" placeholder="Digite seu nome" required>
-      <div class="genero">
-        <label><input type="radio" name="genero" value="mamãe" required> Mamãe</label>
-        <label><input type="radio" name="genero" value="papai" required> Papai</label>
-      </div>
-      <button type="submit">Entrar</button>
-    </form>
-  </div>
+    <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+        <div class="puzzle-piece blue" style="top: 15%; left: 10%; animation-duration: 18s;"></div>
+        <div class="puzzle-piece yellow" style="top: 25%; right: 15%; animation-duration: 22s;"></div>
+        <div class="puzzle-piece red" style="bottom: 20%; left: 25%; animation-duration: 15s;"></div>
+    </div>
 
-  <script>
-    // Verifica se já existe nome e gênero salvos
-    const nomeSalvo = localStorage.getItem('nomeUsuario');
-    const generoSalvo = localStorage.getItem('generoUsuario');
-  
-    if (nomeSalvo && generoSalvo) {
-      // Se já existe, redireciona direto para o menu
-      window.location.href = 'menu.html';
-    }
-  
-    document.getElementById('formEntrada').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nome = document.getElementById('nome').value.trim();
-      const genero = document.querySelector('input[name="genero"]:checked').value;
-  
-      if (nome && genero) {
-        localStorage.setItem('nomeUsuario', nome);
-        localStorage.setItem('generoUsuario', genero);
-        window.location.href = 'menu.html';
-      }
-    });
-  </script>
+    <div class="relative w-full max-w-md">
+        <!-- Card de Boas-vindas (Etapa 1) -->
+        <main id="welcomeCard" class="absolute inset-0 card-enter">
+            <div class="glassmorphism p-8 rounded-2xl text-center">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500 mb-2">Seja Bem-vindo(a)!</h1>
+                <p class="text-gray-500 mb-8">Vamos personalizar sua experiência.</p>
+
+                <form id="formEntrada" class="space-y-6">
+                    <div>
+                        <label for="nome" class="sr-only">Seu nome</label>
+                        <input type="text" id="nome" placeholder="Digite seu nome" required class="w-full px-4 py-3 bg-white/80 border-2 border-transparent rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                    </div>
+                    
+                    <div class="gender-radio grid grid-cols-2 gap-4">
+                        <input type="radio" name="genero" value="mamãe" id="mamãe" required>
+                        <label for="mamãe" class="w-full py-3 px-4 rounded-lg bg-white/80 cursor-pointer font-semibold text-gray-700 shadow-sm hover:bg-gray-100 flex items-center justify-center gap-2">
+                            <span class="text-xl">👩‍👧</span> Mamãe
+                        </label>
+
+                        <input type="radio" name="genero" value="papai" id="papai" required>
+                        <label for="papai" class="w-full py-3 px-4 rounded-lg bg-white/80 cursor-pointer font-semibold text-gray-700 shadow-sm hover:bg-gray-100 flex items-center justify-center gap-2">
+                            <span class="text-xl">👨‍👧</span> Papai
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all transform hover:scale-105">
+                        Avançar
+                    </button>
+                </form>
+            </div>
+        </main>
+        
+        <!-- Card de Personalização (Etapa 2) -->
+        <section id="personalizationCard" class="absolute inset-0 card-enter hidden">
+            <div class="glassmorphism p-8 rounded-2xl text-center">
+                 <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500 mb-2">Personalize</h1>
+                 <p class="text-gray-500 mb-8">Escolha uma cor de tema para o seu app.</p>
+
+                <form id="personalizationForm">
+                    <div class="theme-radio flex justify-center gap-6 my-8">
+                        <input type="radio" name="theme" value="blue" id="theme-blue" checked>
+                        <label for="theme-blue" class="w-12 h-12 rounded-full cursor-pointer bg-blue-500 shadow-md" style="--theme-color: #3b82f6;"></label>
+                        
+                        <input type="radio" name="theme" value="pink" id="theme-pink">
+                        <label for="theme-pink" class="w-12 h-12 rounded-full cursor-pointer bg-pink-500 shadow-md" style="--theme-color: #ec4899;"></label>
+                        
+                        <input type="radio" name="theme" value="teal" id="theme-teal">
+                        <label for="theme-teal" class="w-12 h-12 rounded-full cursor-pointer bg-teal-500 shadow-md" style="--theme-color: #14b8a6;"></label>
+
+                        <input type="radio" name="theme" value="orange" id="theme-orange">
+                        <label for="theme-orange" class="w-12 h-12 rounded-full cursor-pointer bg-orange-500 shadow-md" style="--theme-color: #f97316;"></label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all transform hover:scale-105">
+                        Concluir e Entrar
+                    </button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const welcomeCard = document.getElementById('welcomeCard');
+            const personalizationCard = document.getElementById('personalizationCard');
+            const formEntrada = document.getElementById('formEntrada');
+            const personalizationForm = document.getElementById('personalizationForm');
+            
+            // Ativa a animação de entrada do primeiro card
+            welcomeCard.classList.add('card-enter-active');
+
+            // Verifica se o usuário já personalizou antes
+            if (localStorage.getItem('nomeUsuario') && localStorage.getItem('userTheme')) {
+              window.location.href = 'menu.html';
+            }
+          
+            // Lógica da Etapa 1: Coletar nome e gênero
+            formEntrada.addEventListener('submit', (e) => {
+              e.preventDefault();
+              const nome = document.getElementById('nome').value.trim();
+              const generoInput = document.querySelector('input[name="genero"]:checked');
+
+              if (!generoInput) {
+                  alert('Por favor, selecione se você é Mamãe ou Papai.');
+                  return;
+              }
+              const genero = generoInput.value;
+          
+              if (nome && genero) {
+                localStorage.setItem('nomeUsuario', nome);
+                localStorage.setItem('generoUsuario', genero);
+                
+                // Transição para a Etapa 2
+                welcomeCard.classList.add('card-leave-active');
+                setTimeout(() => {
+                    welcomeCard.classList.add('hidden');
+                    personalizationCard.classList.remove('hidden');
+                    personalizationCard.classList.add('card-enter-active');
+                }, 300);
+              }
+            });
+
+            // Lógica da Etapa 2: Coletar tema e redirecionar
+            personalizationForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const selectedTheme = document.querySelector('input[name="theme"]:checked').value;
+                localStorage.setItem('userTheme', selectedTheme);
+                
+                // Animação de saída e redirecionamento final
+                personalizationCard.classList.remove('card-enter-active');
+                personalizationCard.classList.add('card-leave-active');
+
+                setTimeout(() => {
+                    window.location.href = 'menu.html';
+                }, 300);
+            });
+        });
+    </script>
 </body>
 </html>
+
