@@ -1,62 +1,97 @@
-        /* Custom styles for animations and overall theme */
-        body {
+  body {
             font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            /* New elegant, dark gradient background */
-            background: linear-gradient(to top, #0f172a 0%, #1e293b 100%);
-            overflow: hidden; /* Hide scrollbars and prevent orb overflow */
+            background-color: #f0f9ff; /* Fundo azul céu bem clarinho */
+            overflow: hidden;
         }
 
-        /* --- Floating Orbs Background Effect (More Subtle) --- */
-        .orb-container {
-            position: absolute;
+        /* Efeito de fundo "Aurora" animado */
+        .aurora-container {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
         }
 
-        .orb {
+        .aurora {
             position: absolute;
-            bottom: -80px; /* Start further below the screen */
-            background: rgba(199, 210, 254, 0.1); /* Subtle indigo tint */
             border-radius: 50%;
-            animation: rise 30s infinite linear;
-            box-shadow: 0 0 20px rgba(199, 210, 254,0.1), 0 0 40px rgba(199, 210, 254,0.05);
+            filter: blur(80px);
+            opacity: 0.25;
         }
 
-        /* Assign different sizes, positions, and much longer animation durations */
-        .orb:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 45s; }
-        .orb:nth-child(2) { width: 30px; height: 30px; left: 25%; animation-duration: 35s; animation-delay: 5s; }
-        .orb:nth-child(3) { width: 60px; height: 60px; left: 50%; animation-duration: 50s; animation-delay: 2s; }
-        .orb:nth-child(4) { width: 90px; height: 90px; left: 70%; animation-duration: 40s; animation-delay: 7s; }
-        .orb:nth-child(5) { width: 40px; height: 40px; left: 85%; animation-duration: 55s; animation-delay: 10s; }
+        .aurora-1 {
+            width: 50vw;
+            height: 50vw;
+            background-color: #a5b4fc; /* Indigo-300 */
+            top: -20%;
+            left: -20%;
+            animation: moveAurora1 25s infinite alternate ease-in-out;
+        }
 
-        @keyframes rise {
-            to {
-                transform: translateY(-110vh) translateX(5vw); /* Slower sideways movement */
-                opacity: 0;
-            }
+        .aurora-2 {
+            width: 40vw;
+            height: 40vw;
+            background-color: #bae6fd; /* Sky-200 */
+            bottom: -15%;
+            right: -15%;
+            animation: moveAurora2 20s infinite alternate-reverse ease-in-out;
         }
         
-        /* Softer breathing animation with a more subtle gradient */
-        .breathing-circle {
-            background: radial-gradient(circle, rgba(165, 180, 252, 0.2) 0%, rgba(165, 180, 252, 0.05) 70%);
-            animation: breathe 8s ease-in-out infinite;
-            box-shadow: 0 0 25px rgba(165, 180, 252, 0.1);
+        @keyframes moveAurora1 {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(10vw, 15vh) rotate(90deg); }
         }
 
-        @keyframes breathe {
-            0%   { transform: scale(0.95); opacity: 0.8; }
-            50%  { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.8; }
+        @keyframes moveAurora2 {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(-15vw, -10vh) rotate(-90deg); }
         }
 
-        /* Elegant glow effect for active buttons */
-        .active-sound {
-            background-color: rgba(199, 210, 254, 0.2) !important;
-            box-shadow: 0 0 15px 3px rgba(165, 180, 252, 0.2);
+        /* Efeito de card de vidro (Glassmorphism) */
+        .card-vidro {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        /* Animação de entrada para o card */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animacao-entrada {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* Círculo de respiração com gradiente mais vivo */
+        .circulo-respiracao {
+            background: radial-gradient(circle, #c7d2fe, #a5b4fc);
+            box-shadow: 0 10px 30px -10px rgba(165, 180, 252, 0.6);
+            animation: respirar 8s ease-in-out infinite;
+        }
+
+        @keyframes respirar {
+            0%, 100% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        
+        /* Estilos e animações dos botões */
+        .botao-som {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .botao-som:hover {
+            transform: translateY(-4px);
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .som-ativo {
+            background-color: #818cf8 !important; /* Indigo-400 */
+            color: white !important;
+            box-shadow: 0 0 20px 5px rgba(129, 140, 248, 0.4);
         }
