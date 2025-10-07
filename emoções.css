@@ -2,7 +2,7 @@ body {
             font-family: 'Inter', sans-serif;
             color: #334155; /* Cor de texto padrão (slate-700) */
             background-color: #f0f9ff; /* Fundo azul bem claro (sky-50) */
-            overflow: hidden;
+            overflow-x: hidden; /* MUDANÇA: permite rolar para baixo, mas não para os lados */
         }
 
         /* Fundo com partículas animadas em tons claros */
