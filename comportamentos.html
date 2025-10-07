@@ -3,50 +3,69 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro de Comportamentos</title>
+    <title>Registro de Comportamentos Deluxe</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="comportamentos.css">
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <main class="w-full max-w-2xl mx-auto bg-slate-900/40 backdrop-blur-2xl rounded-2xl shadow-2xl p-6 md:p-8 text-white border border-white/10 z-10">
+    <div id="fundo-animado"></div>
 
-        <h1 class="text-3xl font-bold text-center mb-6 text-slate-100">Registro de Comportamentos</h1>
+    <main class="container-principal w-full max-w-2xl mx-auto z-10">
+        <!-- Cartão com efeito de acrílico e borda brilhante */ -->
+        <div class="cartao-acrilico bg-white/80 backdrop-blur-2xl rounded-3xl shadow-2xl p-6 md:p-8 text-slate-800 border border-white/50 animacao-entrada relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/20 to-transparent opacity-50"></div>
+            
+            <div class="conteudo-do-cartao relative">
+                <div class="cabecalho text-center mb-8">
+                     <h1 class="text-3xl font-bold text-slate-700 tracking-tight">Registro de Comportamentos</h1>
+                     <p class="text-slate-500 mt-2">Anote, acompanhe e entenda cada detalhe.</p>
+                </div>
 
-        <form id="formComportamento" class="space-y-4 mb-8">
-            <input type="text" id="comportamento" placeholder="Qual comportamento você observou?" required class="w-full p-3 bg-white/5 rounded-lg border border-white/10 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="date" id="data" required class="w-full p-3 bg-white/5 rounded-lg border border-white/10 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition" style="color-scheme: dark;">
-                <textarea id="obsComportamento" rows="1" placeholder="Observações..." class="w-full p-3 bg-white/5 rounded-lg border border-white/10 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"></textarea>
+                <form id="formulario-de-comportamento" class="space-y-4 mb-8">
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg></span>
+                        <input type="text" id="campo-comportamento" placeholder="Qual comportamento foi observado?" required class="w-full pl-10 p-3 bg-white/70 text-slate-700 placeholder:text-slate-500 rounded-lg border border-transparent focus:ring-2 focus:ring-blue-400 focus:outline-none transition">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg></span>
+                            <input type="date" id="campo-data" required class="w-full pl-10 p-3 bg-white/70 text-slate-700 rounded-lg border border-transparent focus:ring-2 focus:ring-blue-400 focus:outline-none transition">
+                        </div>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg></span>
+                            <textarea id="campo-observacoes" rows="1" placeholder="Observações..." class="w-full pl-10 p-3 bg-white/70 text-slate-700 placeholder:text-slate-500 rounded-lg border border-transparent focus:ring-2 focus:ring-blue-400 focus:outline-none transition"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" id="botao-enviar" class="w-full p-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-lg font-semibold shadow-lg transition transform hover:-translate-y-1 active:translate-y-0 active:scale-95">Adicionar Registro</button>
+                </form>
+
+                <div class="secao-historico">
+                    <h2 class="text-xl font-semibold mb-4 text-center text-slate-600">Histórico de Registros</h2>
+                    <ul id="lista-de-comportamentos" class="space-y-3 max-h-60 overflow-y-auto rolagem-bonita pr-2">
+                        <!-- Registros aparecem aqui -->
+                    </ul>
+                </div>
             </div>
-            <button type="submit" id="submit-button" class="w-full p-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold shadow-lg transition transform hover:scale-105">Adicionar Registro</button>
-        </form>
-
-        <div>
-            <h2 class="text-xl font-semibold mb-4 text-center text-slate-200">Histórico</h2>
-            <ul id="listaComportamentos" class="space-y-3 max-h-60 overflow-y-auto custom-scrollbar pr-2">
-                <!-- Itens da lista serão inseridos aqui -->
-            </ul>
         </div>
     </main>
     
-    <!-- Modal de Confirmação de Exclusão -->
-    <div id="delete-modal" class="fixed inset-0 bg-black/60 items-center justify-center hidden z-50">
-        <div class="bg-slate-800 rounded-lg p-6 shadow-xl border border-white/10 text-center">
-            <h3 class="text-lg font-medium text-slate-100">Confirmar Exclusão</h3>
-            <p class="text-slate-400 mt-2 mb-4">Você tem certeza que deseja excluir este registro?</p>
+    <div id="janela-confirmar-exclusao" class="fixed inset-0 bg-black/50 backdrop-blur-sm items-center justify-center hidden z-50">
+        <div class="caixa-de-dialogo bg-white rounded-2xl p-8 shadow-xl border border-slate-200 text-center animacao-entrada">
+            <h3 class="text-xl font-bold text-slate-800">Confirmar Exclusão</h3>
+            <p class="text-slate-600 mt-2 mb-8">Tem certeza de que deseja apagar este registro para sempre?</p>
             <div class="flex justify-center gap-4">
-                <button id="cancel-delete" class="px-4 py-2 bg-slate-600 hover:bg-slate-500 rounded-md transition">Cancelar</button>
-                <button id="confirm-delete" class="px-4 py-2 bg-red-600 hover:bg-red-500 rounded-md transition">Excluir</button>
+                <button id="botao-cancelar-exclusao" class="px-6 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-lg transition transform hover:-translate-y-0.5">Cancelar</button>
+                <button id="botao-confirmar-exclusao" class="px-6 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition transform hover:-translate-y-0.5">Excluir</button>
             </div>
         </div>
     </div>
-    <script src="comportamentos.js"></script>
+   <script src="comportamentos.js"></script>
 </body>
 </html>
 
