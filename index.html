@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Principal | AutiCare</title>
+    
+    <!-- Tipografia Elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+    <!-- Fundo animado com peças de quebra-cabeça -->
+    <div class="puzzle-bg">
+        <div class="puzzle-piece" style="--d: 15s; --t: 5%; --l: 8%;"></div>
+        <div class="puzzle-piece" style="--d: 18s; --t: 60%; --l: 88%;"></div>
+        <div class="puzzle-piece" style="--d: 20s; --t: 85%; --l: 12%;"></div>
+        <div class="puzzle-piece" style="--d: 14s; --t: 30%; --l: 75%;"></div>
+        <div class="puzzle-piece" style="--d: 17s; --t: 15%; --l: 55%;"></div>
+        <div class="puzzle-piece" style="--d: 13s; --t: 45%; --l: 22%;"></div>
+        <div class="puzzle-piece" style="--d: 19s; --t: 75%; --l: 68%;"></div>
+        <div class="puzzle-piece" style="--d: 16s; --t: 50%; --l: 45%;"></div>
+    </div>
+
+    <main class="main-container">
+        <!-- Card Principal com Saudação e Opções -->
+        <div class="card menu-card">
+            <h1 id="saudacao">Bem-vindo(a)!</h1>
+            <div class="opcoes">
+                <button onclick="location.href='cadastro.html'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2Z" fill="white" fill-opacity="0.6"/>
+                        <path d="M20 22C20 17.5817 16.4183 14 12 14C7.58172 14 4 17.5817 4 22H20Z" fill="white"/>
+                    </svg>
+                    <span>Cadastro</span>
+                </button>
+                <button onclick="location.href='agenda.html'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 8C4 6.89543 4.89543 6 6 6H18C19.1046 6 20 6.89543 20 8V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V8Z" fill="white"/>
+                        <path d="M16 3V7M8 3V7" stroke="#8378ff" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M4 11H20" stroke="#8378ff" stroke-width="1.5" opacity="0.5"/>
+                    </svg>
+                    <span>Agenda</span>
+                </button>
+                <button onclick="location.href='comportamentos.html'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 3H7C4.79086 3 3 4.79086 3 7V17C3 17.4714 3.14286 17.9429 3.42857 18.2857L4.71429 20V17H17C19.2091 17 21 15.2091 21 13V7C21 4.79086 19.2091 3 17 3Z" fill="white"/>
+                        <circle cx="7.5" cy="10" r="1.5" fill="#8378ff"/>
+                        <circle cx="12" cy="10" r="1.5" fill="#8378ff" opacity="0.7"/>
+                        <circle cx="16.5" cy="10" r="1.5" fill="#8378ff" opacity="0.4"/>
+                    </svg>
+                    <span>Comportamentos</span>
+                </button>
+                <button onclick="location.href='emoções.html'">
+                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="white"/>
+                        <path d="M8 14C8.90139 15.1613 10.392 16 12 16C13.608 16 15.0986 15.1613 16 14H8Z" fill="#8378ff"/>
+                        <circle cx="9" cy="10" r="1.5" fill="#8378ff"/>
+                        <circle cx="15" cy="10" r="1.5" fill="#8378ff"/>
+                    </svg>
+                    <span>Emoções</span>
+                </button>
+                <button onclick="location.href='calma.html'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="white"/>
+                        <path d="M12 5.67L4.22 13.45a5.5 5.5 0 0 0 7.78 7.78L12 21.23" fill="white" opacity="0.6"/>
+                    </svg>
+                    <span>Acalme-se</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Card de Próximos Compromissos -->
+        <div class="card compromissos-card">
+            <h2>Próximos Compromissos</h2>
+            <ul id="lista-compromissos">
+                <!-- Compromissos serão inseridos aqui pelo JavaScript -->
+            </ul>
+        </div>
+    </main>
+    <script src="menu.js"></script>
+</body>
+</html>
+
