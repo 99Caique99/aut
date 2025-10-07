@@ -3,84 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Principal | AutiCare</title>
-    
-    <!-- Tipografia Elegante -->
+    <title>Login | AutiCare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="menu.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .puzzle-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
+            pointer-events: none; overflow: hidden;
+            background: linear-gradient(135deg, #fce3ec 0%, #e8e6ff 100%);
+        }
+        .puzzle-piece {
+            position: absolute; opacity: 0; width: 60px; height: 60px;
+            background-image: url('data:image/svg+xml;utf8,<svg width="96" height="96" viewBox="0 0 96 96" fill="rgba(109, 95, 246, 0.2)" xmlns="http://www.w3.org/2000/svg"><path d="M48 0a12 12 0 0 1 12 12v4h12a12 12 0 0 1 0 24h-4v12h4a12 12 0 0 1 0 24h-12v4a12 12 0 0 1-24 0v-4H24a12 12 0 0 1 0-24h4V40h-4a12 12 0 0 1 0-24h12v-4A12 12 0 0 1 48 0z"/></svg>');
+            background-size: contain; background-repeat: no-repeat;
+            animation: floatAndFade 15s infinite alternate ease-in-out;
+        }
+        @keyframes floatAndFade {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(20px) rotate(15deg); opacity: 0; }
+        }
+    </style>
 </head>
-<body>
-    <!-- Fundo animado com peças de quebra-cabeça -->
-    <div class="puzzle-bg">
-        <div class="puzzle-piece" style="--d: 15s; --t: 5%; --l: 8%;"></div>
-        <div class="puzzle-piece" style="--d: 18s; --t: 60%; --l: 88%;"></div>
-        <div class="puzzle-piece" style="--d: 20s; --t: 85%; --l: 12%;"></div>
-        <div class="puzzle-piece" style="--d: 14s; --t: 30%; --l: 75%;"></div>
-        <div class="puzzle-piece" style="--d: 17s; --t: 15%; --l: 55%;"></div>
-        <div class="puzzle-piece" style="--d: 13s; --t: 45%; --l: 22%;"></div>
-        <div class="puzzle-piece" style="--d: 19s; --t: 75%; --l: 68%;"></div>
-        <div class="puzzle-piece" style="--d: 16s; --t: 50%; --l: 45%;"></div>
-    </div>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-    <main class="main-container">
-        <!-- Card Principal com Saudação e Opções -->
-        <div class="card menu-card">
-            <h1 id="saudacao">Bem-vindo(a)!</h1>
-            <div class="opcoes">
-                <button onclick="location.href='cadastro.html'">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2Z" fill="white" fill-opacity="0.6"/>
-                        <path d="M20 22C20 17.5817 16.4183 14 12 14C7.58172 14 4 17.5817 4 22H20Z" fill="white"/>
-                    </svg>
-                    <span>Cadastro</span>
+    <div class="puzzle-bg">
+        <div class="puzzle-piece" style="top: 10%; left: 15%; animation-duration: 20s;"></div>
+        <div class="puzzle-piece" style="top: 70%; right: 10%; animation-duration: 25s;"></div>
+        <div class="puzzle-piece" style="bottom: 15%; left: 40%; animation-duration: 18s;"></div>
+    </div>
+    
+    <div id="loading-message" class="text-gray-600 font-semibold">Verificando autenticação...</div>
+
+    <main id="login-container" class="w-full max-w-sm text-center" style="display: none;">
+        <div class="bg-white/60 backdrop-blur-xl border border-white/30 rounded-2xl shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Bem-vindo(a) ao AutiCare</h1>
+            <p class="text-gray-600 mb-6">Faça login para continuar</p>
+            
+            <div id="error-message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6 text-sm" role="alert" style="display: none;"></div>
+
+            <div class="space-y-4">
+                <button id="login-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-md">
+                    <svg class="w-6 h-6" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+                    Entrar com Google
                 </button>
-                <button onclick="location.href='agenda.html'">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 8C4 6.89543 4.89543 6 6 6H18C19.1046 6 20 6.89543 20 8V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V8Z" fill="white"/>
-                        <path d="M16 3V7M8 3V7" stroke="#8378ff" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M4 11H20" stroke="#8378ff" stroke-width="1.5" opacity="0.5"/>
+                <button id="apple-login-button" class="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-md">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M8.28,2.53a2.31,2.31,0,0,0-1.57.65,2.68,2.68,0,0,0-1.12,2.2,4.43,4.43,0,0,0,.62,2.37c.45.8,1.1,1.55,1.93,1.55s1-.33,1.82-1c.59-.47,1-1.15,1-2.09A2.69,2.69,0,0,0,8.28,2.53Z"/>
+                      <path d="M11.39,11.12a5.2,5.2,0,0,1-1.53.8,4.51,4.51,0,0,1-1.89.44c-1.59,0-2.83-1-3.66-2.47a5.3,5.3,0,0,1,2.28-1c1.24-.11,2.36.63,2.66,1.83a.4.4,0,0,0,.68-.27c-.24-1.49-1.3-2.6-2.9-2.5s-2.73.9-3.41,2.29a5.1,5.1,0,0,0-.73,2.94,5.34,5.34,0,0,0,3.31,4.71,4.4,4.4,0,0,0,2.39.2c1,0,1.89-.3,2.58-.83a.39.39,0,0,0,.15-.55A.41.41,0,0,0,11.39,11.12Z"/>
                     </svg>
-                    <span>Agenda</span>
-                </button>
-                <button onclick="location.href='comportamentos.html'">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17 3H7C4.79086 3 3 4.79086 3 7V17C3 17.4714 3.14286 17.9429 3.42857 18.2857L4.71429 20V17H17C19.2091 17 21 15.2091 21 13V7C21 4.79086 19.2091 3 17 3Z" fill="white"/>
-                        <circle cx="7.5" cy="10" r="1.5" fill="#8378ff"/>
-                        <circle cx="12" cy="10" r="1.5" fill="#8378ff" opacity="0.7"/>
-                        <circle cx="16.5" cy="10" r="1.5" fill="#8378ff" opacity="0.4"/>
-                    </svg>
-                    <span>Comportamentos</span>
-                </button>
-                <button onclick="location.href='emoções.html'">
-                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" fill="white"/>
-                        <path d="M8 14C8.90139 15.1613 10.392 16 12 16C13.608 16 15.0986 15.1613 16 14H8Z" fill="#8378ff"/>
-                        <circle cx="9" cy="10" r="1.5" fill="#8378ff"/>
-                        <circle cx="15" cy="10" r="1.5" fill="#8378ff"/>
-                    </svg>
-                    <span>Emoções</span>
-                </button>
-                <button onclick="location.href='calma.html'">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="white"/>
-                        <path d="M12 5.67L4.22 13.45a5.5 5.5 0 0 0 7.78 7.78L12 21.23" fill="white" opacity="0.6"/>
-                    </svg>
-                    <span>Acalme-se</span>
+                    Entrar com Apple
                 </button>
             </div>
         </div>
-
-        <!-- Card de Próximos Compromissos -->
-        <div class="card compromissos-card">
-            <h2>Próximos Compromissos</h2>
-            <ul id="lista-compromissos">
-                <!-- Compromissos serão inseridos aqui pelo JavaScript -->
-            </ul>
-        </div>
     </main>
-    <script src="menu.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVZ3yG8dvgbbuym3Yk2OKsSz2sSPfFr3Q",
+            authDomain: "autism10-3e151.firebaseapp.com",
+            projectId: "autism10-3e151",
+            storageBucket: "autism10-3e151.appspot.com",
+            messagingSenderId: "423547360033",
+            appId: "1:423547360033:web:8253ec498f16951bc12460",
+            measurementId: "G-SSMLE8EH3E"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+        const appleProvider = new OAuthProvider('apple.com');
+
+        const loadingMessage = document.getElementById('loading-message');
+        const loginContainer = document.getElementById('login-container');
+        const googleLoginButton = document.getElementById('login-button');
+        const appleLoginButton = document.getElementById('apple-login-button');
+        const errorMessageDiv = document.getElementById('error-message');
+
+        onAuthStateChanged(auth, (user) => {
+            loadingMessage.style.display = 'none'; // Esconde a mensagem de "carregando"
+            if (user) {
+                window.location.href = 'menu.html';
+            } else {
+                loginContainer.style.display = 'block';
+            }
+        });
+
+        const handleLogin = (provider) => {
+            errorMessageDiv.style.display = 'none'; // Esconde erros antigos
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    // O redirecionamento será tratado pelo onAuthStateChanged
+                }).catch((error) => {
+                    console.error("Erro no login:", error.code, error.message);
+                    let userMessage = "Ocorreu um erro desconhecido. Tente novamente.";
+
+                    if (error.code === 'auth/popup-blocked') {
+                        userMessage = "O pop-up de login foi bloqueado. Por favor, habilite os pop-ups para este site.";
+                    } else if (error.code === 'auth/operation-not-allowed') {
+                        userMessage = "O login com este método não está ativado. Verifique a configuração no Firebase.";
+                    } else if (error.code === 'auth/cancelled-popup-request') {
+                        userMessage = "A janela de login foi fechada antes da conclusão. Tente novamente.";
+                    } else if (error.message.includes('auth/unauthorized-domain')) {
+                         userMessage = "Este domínio não está autorizado para login. Verifique as configurações no Firebase.";
+                    }
+                    
+                    errorMessageDiv.textContent = userMessage;
+                    errorMessageDiv.style.display = 'block';
+                });
+        };
+
+        googleLoginButton.addEventListener('click', () => handleLogin(googleProvider));
+        appleLoginButton.addEventListener('click', () => handleLogin(appleProvider));
+    </script>
 </body>
 </html>
+
 
