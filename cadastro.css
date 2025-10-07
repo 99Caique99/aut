@@ -1,7 +1,7 @@
   /* Estilos personalizados e animações */
         body {
             font-family: 'Inter', sans-serif;
-            background-image: linear-gradient(to top right, #3b82f6, #1e3a8a); /* Gradiente de azul claro para escuro */
+            background-image: linear-gradient(to top right, #b0ceff, #577ada); /* Gradiente de azul claro para escuro */
             overflow-x: hidden;
             position: relative;
         }
