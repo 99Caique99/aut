@@ -18,7 +18,7 @@
         
         /* Estilo para placeholder dos inputs */
         ::placeholder {
-            color: rgba(226, 232, 240, 0.6);
+            color: rgba(0, 0, 0, 0.6);
         }
         
         /* Estilizando o ícone do calendário no input date */
